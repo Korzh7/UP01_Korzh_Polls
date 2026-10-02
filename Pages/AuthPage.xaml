@@ -1,0 +1,138 @@
+﻿<Page x:Class="UP01_Korzh_Polls.Pages.AuthPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="550" d:DesignWidth="850"
+      Title="Авторизация">
+
+    <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Border Background="{DynamicResource SurfaceColor}" 
+                BorderBrush="{DynamicResource BorderBrushColor}" 
+                BorderThickness="1" 
+                CornerRadius="8" 
+                Padding="35" 
+                Width="460">
+            <StackPanel HorizontalAlignment="Stretch">
+                
+                <TextBlock Text="ВХОД В СИСТЕМУ" 
+                           FontSize="20" 
+                           FontWeight="Bold" 
+                           HorizontalAlignment="Center" 
+                           Margin="0,0,0,5"
+                           Foreground="{DynamicResource PrimaryDarkColor}"/>
+
+                <TextBlock Text="Платформа проведения опросов и голосований" 
+                           FontSize="12" 
+                           HorizontalAlignment="Center" 
+                           Margin="0,0,0,25"
+                           Foreground="{DynamicResource MutedTextColor}"/>
+
+                                <Label x:Name="labelLogin" Content="Логин или Email:" Margin="0,0,0,2"/>
+                <Grid Margin="0,0,0,14">
+                    <TextBox x:Name="TextBoxLogin"
+                             ToolTip="Введите ваш логин или электронную почту"
+                             TextChanged="TextBoxLogin_TextChanged"/>
+                    <TextBlock x:Name="txtHintLogin" 
+                               Text="Введите логин..." 
+                               Foreground="{DynamicResource MutedTextColor}"
+                               IsHitTestVisible="False"
+                               VerticalAlignment="Center"
+                               Margin="10,0,0,0"/>
+                </Grid>
+
+                                <Label x:Name="labelPass" Content="Пароль:" Margin="0,0,0,2"/>
+                <Grid Margin="0,0,0,18">
+                    <PasswordBox x:Name="PasswordBox"
+                                 ToolTip="Введите пароль учетной записи"
+                                 PasswordChanged="PasswordBox_PasswordChanged"/>
+                    <TextBlock x:Name="txtHintPass" 
+                               Text="Введите пароль..." 
+                               Foreground="{DynamicResource MutedTextColor}"
+                               IsHitTestVisible="False"
+                               VerticalAlignment="Center"
+                               Margin="10,0,0,0"/>
+                </Grid>
+
+                                <StackPanel x:Name="captchaPanel" Visibility="Collapsed" Margin="0,0,0,18">
+                    <Label x:Name="labelCaptcha" Content="Код подтверждения (Капча):" FontWeight="SemiBold"/>
+                    
+                    <Grid Margin="0,4,0,8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                                                <TextBox x:Name="captcha" 
+                                 Grid.Column="0"
+                                 CommandManager.PreviewExecuted="textBox_PreviewExecuted"
+                                 ContextMenu="{x:Null}"
+                                 Height="42"
+                                 Foreground="Red"
+                                 FontStyle="Italic"
+                                 FontWeight="Bold"
+                                 FontStretch="UltraCondensed"
+                                 IsReadOnly="True"
+                                 HorizontalContentAlignment="Center"
+                                 VerticalContentAlignment="Center"
+                                 FontSize="22"
+                                 Background="#FFEBEB"
+                                 BorderBrush="Red"
+                                 BorderThickness="1.5"
+                                 ToolTip="Символы капчи (копирование запрещено)"/>
+                        
+                        <Button Grid.Column="1" 
+                                Content="Обновить" 
+                                ToolTip="Сгенерировать другую капчу" 
+                                MinWidth="90" 
+                                Height="42" 
+                                Margin="8,0,0,0"
+                                Click="ButtonRefreshCaptcha_Click"/>
+                    </Grid>
+
+                    <Label Content="Введите символы с картинки:" FontSize="12"/>
+                    <TextBox x:Name="captchaInput" 
+                             Height="34" 
+                             ToolTip="Введите символы капчи вручную" 
+                             Margin="0,2,0,8"/>
+
+                    <Button x:Name="submitCaptcha"
+                            Content="Подтвердить капчу"
+                            ToolTip="Подтвердить ввод защитного кода"
+                            HorizontalAlignment="Stretch"
+                            Click="submitCaptcha_Click"/>
+                </StackPanel>
+
+                                <Button x:Name="ButtonEnter"
+                        Content="Войти"
+                        ToolTip="Авторизоваться в системе"
+                        HorizontalAlignment="Stretch"
+                        Height="38"
+                        Margin="0,0,0,8"
+                        Click="ButtonEnter_OnClick"/>
+
+                <Button x:Name="ButtonReg"
+                        Content="Регистрация"
+                        ToolTip="Создать новую учетную запись"
+                        HorizontalAlignment="Stretch"
+                        Background="Transparent"
+                        Foreground="{DynamicResource PrimaryDarkColor}"
+                        BorderThickness="1"
+                        BorderBrush="{DynamicResource PrimaryColor}"
+                        Margin="0,0,0,6"
+                        Click="ButtonReg_Click"/>
+
+                <Button x:Name="ButtonChangePassword"
+                        Content="Забыли пароль? (Смена пароля)"
+                        ToolTip="Перейти к форме смены пароля"
+                        HorizontalAlignment="Stretch"
+                        Background="Transparent"
+                        Foreground="{DynamicResource MutedTextColor}"
+                        BorderThickness="0"
+                        FontSize="11"
+                        Click="ButtonChangePassword_Click"/>
+
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>
