@@ -1,0 +1,52 @@
+<Page x:Class="UP01_Korzh_Polls.Pages.AddCategoryPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="700"
+      Title="Данные категории">
+
+    <!-- Шаг 10. Пункт 10: Форма добавления/редактирования категории -->
+    <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Border Background="{DynamicResource SurfaceColor}" 
+                BorderBrush="{DynamicResource BorderBrushColor}" 
+                BorderThickness="1" 
+                CornerRadius="8" 
+                Padding="35,25" 
+                Width="480">
+            <StackPanel>
+                <TextBlock x:Name="HeaderTextBlock"
+                           Text="ДОБАВЛЕНИЕ КАТЕГОРИИ" 
+                           FontSize="18" 
+                           FontWeight="Bold" 
+                           HorizontalAlignment="Center" 
+                           Margin="0,0,0,20"
+                           Foreground="{DynamicResource PrimaryDarkColor}"/>
+
+                <Label Content="Название категории:*" Margin="0,0,0,4"/>
+                <TextBox x:Name="TBCategoryName" 
+                         Text="{Binding Name}" 
+                         ToolTip="Введите наименование категории опросов" 
+                         Margin="0,0,0,25"/>
+
+                <Grid>
+                    <Button x:Name="ButtonClean" 
+                            Content="Очистить" 
+                            ToolTip="Очистить поле ввода" 
+                            Style="{DynamicResource DangerButtonStyle}"
+                            HorizontalAlignment="Left" 
+                            Height="36" MinWidth="120"
+                            Click="ButtonClean_Click"/>
+
+                    <Button x:Name="ButtonSaveCategory" 
+                            Content="Сохранить" 
+                            ToolTip="Сохранить категорию в базе данных" 
+                            HorizontalAlignment="Right" 
+                            Height="36" MinWidth="120"
+                            Click="ButtonSaveCategory_Click"/>
+                </Grid>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>
