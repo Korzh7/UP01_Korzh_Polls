@@ -1,0 +1,84 @@
+﻿<Page x:Class="UP01_Korzh_Polls.Pages.AdminPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="550" d:DesignWidth="850"
+      Title="Панель администратора">
+
+        <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Border Background="{DynamicResource SurfaceColor}" 
+                BorderBrush="{DynamicResource BorderBrushColor}" 
+                BorderThickness="1" 
+                CornerRadius="10" 
+                Padding="40" 
+                Width="600">
+            <StackPanel HorizontalAlignment="Center">
+
+                <TextBlock Text="ПАНЕЛЬ АДМИНИСТРАТОРА" 
+                           FontSize="20" 
+                           FontWeight="Bold" 
+                           HorizontalAlignment="Center" 
+                           Margin="0,0,0,8"
+                           Foreground="{DynamicResource PrimaryDarkColor}"/>
+
+                <TextBlock Text="Управление сущностями базы данных и аналитика платформы" 
+                           FontSize="12" 
+                           HorizontalAlignment="Center" 
+                           Margin="0,0,0,30"
+                           Foreground="{DynamicResource MutedTextColor}"/>
+
+                                <Grid Margin="0,0,0,20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                                        <Button x:Name="BtnTab1" 
+                            Grid.Row="0" Grid.Column="0"
+                            Content="Управление пользователями" 
+                            ToolTip="Просмотр, добавление, редактирование и удаление пользователей"
+                            Height="48" Margin="8"
+                            Click="BtnTab1_Click"/>
+
+                                        <Button x:Name="BtnTab2" 
+                            Grid.Row="0" Grid.Column="1"
+                            Content="Управление категориями" 
+                            ToolTip="Просмотр, создание и редактирование тематических категорий"
+                            Height="48" Margin="8"
+                            Click="BtnTab2_Click"/>
+
+                                        <Button x:Name="BtnTab3" 
+                            Grid.Row="1" Grid.Column="0"
+                            Content="Управление опросами" 
+                            ToolTip="Просмотр, создание и редактирование опросов и голосований"
+                            Height="48" Margin="8"
+                            Click="BtnTab3_Click"/>
+
+                                        <Button x:Name="BtnTab4" 
+                            Grid.Row="1" Grid.Column="1"
+                            Content="Диаграммы и Экспорт" 
+                            ToolTip="Просмотр аналитики, графиков и экспорт отчетов в Word / Excel"
+                            Height="48" Margin="8"
+                            Click="BtnTab4_Click"/>
+                </Grid>
+
+                <Button Content="Режим просмотра каталога (как пользователь)"
+                        ToolTip="Перейти к списку пользователей с фильтрацией"
+                        Background="Transparent"
+                        Foreground="{DynamicResource PrimaryColor}"
+                        BorderThickness="1"
+                        BorderBrush="{DynamicResource PrimaryColor}"
+                        Height="36"
+                        Margin="8,0"
+                        Click="BtnUserView_Click"/>
+
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>

@@ -1,0 +1,64 @@
+﻿<Page x:Class="UP01_Korzh_Polls.Pages.PollTabPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="950"
+      Title="Управление таблицей опросов и голосований">
+
+        <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <DataGrid Grid.Row="0" x:Name="DataGridPoll" 
+                  AutoGenerateColumns="False" 
+                  IsReadOnly="True"
+                  SelectionMode="Extended"
+                  Background="{DynamicResource SurfaceColor}"
+                  RowBackground="{DynamicResource SurfaceColor}"
+                  AlternatingRowBackground="#FAFAFA"
+                  BorderBrush="{DynamicResource BorderBrushColor}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
+                <DataGridTextColumn Header="Дата создания" Binding="{Binding CreatedAt, StringFormat='dd.MM.yyyy HH:mm'}" Width="130"/>
+                <DataGridTextColumn Header="Автор" Binding="{Binding User.FullName}" Width="160"/>
+                <DataGridTextColumn Header="Категория" Binding="{Binding Category.Name}" Width="160"/>
+                <DataGridTextColumn Header="Название опроса" Binding="{Binding Title}" Width="220"/>
+                <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="100"/>
+                <DataGridTextColumn Header="Анонимный" Binding="{Binding IsAnonymous}" Width="90"/>
+
+                <DataGridTemplateColumn Header="Действия" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="ButtonEdit" 
+                                    Content="Редактировать" 
+                                    ToolTip="Редактировать параметры опроса" 
+                                    Height="28" MinWidth="110" Margin="2"
+                                    Click="ButtonEdit_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+                <Grid Grid.Row="1" Margin="0,12,0,0">
+            <Button x:Name="ButtonAdd" 
+                    Content="Добавить опрос" 
+                    ToolTip="Создать новый опрос или голосование" 
+                    HorizontalAlignment="Left" 
+                    Height="36"
+                    Click="ButtonAdd_Click"/>
+
+            <Button x:Name="ButtonDel" 
+                    Content="Удалить выбранные" 
+                    ToolTip="Удалить выбранные опросы (включая вопросы и ответы каскадно)" 
+                    Style="{DynamicResource DangerButtonStyle}"
+                    HorizontalAlignment="Right" 
+                    Height="36"
+                    Click="ButtonDel_Click"/>
+        </Grid>
+    </Grid>
+</Page>

@@ -1,0 +1,112 @@
+﻿<Page x:Class="UP01_Korzh_Polls.Pages.AddUserPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="850"
+      Title="Данные пользователя">
+
+        <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Border Background="{DynamicResource SurfaceColor}" 
+                BorderBrush="{DynamicResource BorderBrushColor}" 
+                BorderThickness="1" 
+                CornerRadius="8" 
+                Padding="35,25" 
+                Width="550">
+            <StackPanel>
+                <TextBlock x:Name="HeaderTextBlock"
+                           Text="ДОБАВЛЕНИЕ ПОЛЬЗОВАТЕЛЯ" 
+                           FontSize="18" 
+                           FontWeight="Bold" 
+                           HorizontalAlignment="Center" 
+                           Margin="0,0,0,20"
+                           Foreground="{DynamicResource PrimaryDarkColor}"/>
+
+                <Grid Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="160"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Логин:*" Grid.Column="0"/>
+                    <TextBox x:Name="TBLogin" Text="{Binding Login}" Grid.Column="1" ToolTip="Введите логин"/>
+                </Grid>
+
+                <Grid Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="160"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Пароль:*" Grid.Column="0"/>
+                    <TextBox x:Name="TBPass" Grid.Column="1" ToolTip="Введите пароль (будет сохранен в хешированном виде)"/>
+                </Grid>
+
+                <Grid Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="160"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Роль:*" Grid.Column="0"/>
+                    <ComboBox x:Name="cmbRole" Grid.Column="1" ToolTip="Выберите роль пользователя">
+                        <ComboBoxItem Content="User"/>
+                        <ComboBoxItem Content="Admin"/>
+                    </ComboBox>
+                </Grid>
+
+                <Grid Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="160"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="ФИО:*" Grid.Column="0"/>
+                    <TextBox x:Name="TBFio" Text="{Binding FullName}" Grid.Column="1" ToolTip="Введите полное ФИО"/>
+                </Grid>
+
+                <Grid Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="160"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Email:" Grid.Column="0"/>
+                    <TextBox x:Name="TBEmail" Text="{Binding Email}" Grid.Column="1" ToolTip="Введите адрес электронной почты"/>
+                </Grid>
+
+                <Grid Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="160"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Телефон:" Grid.Column="0"/>
+                    <TextBox x:Name="TBPhone" Text="{Binding Phone}" Grid.Column="1" ToolTip="Введите номер телефона"/>
+                </Grid>
+
+                <Grid Margin="0,0,0,25">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="160"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Фотография (путь):" Grid.Column="0"/>
+                    <TextBox x:Name="TBPhoto" Text="{Binding Photo}" Grid.Column="1" ToolTip="Относительный или абсолютный путь к фото"/>
+                </Grid>
+
+                                <Grid>
+                    <Button x:Name="ButtonClean" 
+                            Content="Очистить" 
+                            ToolTip="Очистить форму ввода" 
+                            Style="{DynamicResource DangerButtonStyle}"
+                            HorizontalAlignment="Left" 
+                            Height="36" MinWidth="130"
+                            Click="ButtonClean_Click"/>
+
+                    <Button x:Name="ButtonSave" 
+                            Content="Сохранить" 
+                            ToolTip="Сохранить данные в базу данных" 
+                            HorizontalAlignment="Right" 
+                            Height="36" MinWidth="130"
+                            Click="ButtonSave_Click"/>
+                </Grid>
+
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>

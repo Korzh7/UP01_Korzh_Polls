@@ -1,0 +1,63 @@
+﻿<Page x:Class="UP01_Korzh_Polls.Pages.UsersTabPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="950"
+      Title="Управление таблицей пользователей">
+
+        <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <DataGrid Grid.Row="0" x:Name="DataGridUser" 
+                  AutoGenerateColumns="False" 
+                  IsReadOnly="True"
+                  SelectionMode="Extended"
+                  Background="{DynamicResource SurfaceColor}"
+                  RowBackground="{DynamicResource SurfaceColor}"
+                  AlternatingRowBackground="#FAFAFA"
+                  BorderBrush="{DynamicResource BorderBrushColor}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
+                <DataGridTextColumn Header="Логин" Binding="{Binding Login}" Width="120"/>
+                <DataGridTextColumn Header="Роль" Binding="{Binding Role}" Width="90"/>
+                <DataGridTextColumn Header="ФИО" Binding="{Binding FullName}" Width="220"/>
+                <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="160"/>
+                <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" Width="140"/>
+                
+                <DataGridTemplateColumn Header="Действия" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="ButtonEdit" 
+                                    Content="Редактировать" 
+                                    ToolTip="Редактировать данные пользователя" 
+                                    Height="28" MinWidth="110" Margin="2"
+                                    Click="ButtonEdit_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+                <Grid Grid.Row="1" Margin="0,12,0,0">
+            <Button x:Name="ButtonAdd" 
+                    Content="Добавить пользователя" 
+                    ToolTip="Добавить новую запись пользователя" 
+                    HorizontalAlignment="Left" 
+                    Height="36"
+                    Click="ButtonAdd_Click"/>
+
+            <Button x:Name="ButtonDel" 
+                    Content="Удалить выбранных" 
+                    ToolTip="Удалить выбранных пользователей из базы данных (каскадно)" 
+                    Style="{DynamicResource DangerButtonStyle}"
+                    HorizontalAlignment="Right" 
+                    Height="36"
+                    Click="ButtonDel_Click"/>
+        </Grid>
+    </Grid>
+</Page>

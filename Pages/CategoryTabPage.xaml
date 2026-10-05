@@ -1,0 +1,59 @@
+﻿<Page x:Class="UP01_Korzh_Polls.Pages.CategoryTabPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="850"
+      Title="Управление категориями опросов">
+
+        <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <DataGrid Grid.Row="0" x:Name="DataGridCategory" 
+                  AutoGenerateColumns="False" 
+                  IsReadOnly="True"
+                  SelectionMode="Extended"
+                  Background="{DynamicResource SurfaceColor}"
+                  RowBackground="{DynamicResource SurfaceColor}"
+                  AlternatingRowBackground="#FAFAFA"
+                  BorderBrush="{DynamicResource BorderBrushColor}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="80"/>
+                <DataGridTextColumn Header="Название категории" Binding="{Binding Name}" Width="400"/>
+
+                <DataGridTemplateColumn Header="Действия" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="ButtonEdit" 
+                                    Content="Редактировать" 
+                                    ToolTip="Изменить название категории" 
+                                    Height="28" MinWidth="110" Margin="2"
+                                    Click="ButtonEdit_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+                <Grid Grid.Row="1" Margin="0,12,0,0">
+            <Button x:Name="ButtonAdd" 
+                    Content="Добавить категорию" 
+                    ToolTip="Создать новую категорию опросов" 
+                    HorizontalAlignment="Left" 
+                    Height="36"
+                    Click="ButtonAdd_Click"/>
+
+            <Button x:Name="ButtonDel" 
+                    Content="Удалить выбранные" 
+                    ToolTip="Удалить выбранные категории (включая связанные опросы)" 
+                    Style="{DynamicResource DangerButtonStyle}"
+                    HorizontalAlignment="Right" 
+                    Height="36"
+                    Click="ButtonDel_Click"/>
+        </Grid>
+    </Grid>
+</Page>
