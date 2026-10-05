@@ -1,0 +1,61 @@
+﻿<Page x:Class="UP01_Korzh_Polls.Pages.ChangePassPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="550" d:DesignWidth="850"
+      Title="Смена пароля">
+
+    <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Border Background="{DynamicResource SurfaceColor}" 
+                BorderBrush="{DynamicResource BorderBrushColor}" 
+                BorderThickness="1" 
+                CornerRadius="8" 
+                Padding="35,25" 
+                Width="480">
+            <StackPanel>
+                <TextBlock Text="СМЕНА ПАРОЛЯ" 
+                           FontSize="20" 
+                           FontWeight="Bold" 
+                           HorizontalAlignment="Center" 
+                           Margin="0,0,0,5"
+                           Foreground="{DynamicResource PrimaryDarkColor}"/>
+
+                <TextBlock Text="Восстановление доступа к вашей учетной записи" 
+                           FontSize="12" 
+                           HorizontalAlignment="Center" 
+                           Margin="0,0,0,20"
+                           Foreground="{DynamicResource MutedTextColor}"/>
+
+                                <Label Content="Логин:" Margin="0,0,0,2"/>
+                <TextBox x:Name="TbLogin" 
+                         ToolTip="Введите ваш логин" 
+                         Margin="0,0,0,12"/>
+
+                                <Label Content="Текущий (старый) пароль:" Margin="0,0,0,2"/>
+                <PasswordBox x:Name="CurrentPasswordBox" 
+                             ToolTip="Введите ваш текущий пароль" 
+                             Margin="0,0,0,12"/>
+
+                                <Label Content="Новый пароль:" Margin="0,0,0,2"/>
+                <PasswordBox x:Name="NewPasswordBox" 
+                             ToolTip="Новый пароль: мин. 6 символов, латиница, хотя бы одна цифра" 
+                             Margin="0,0,0,12"/>
+
+                                <Label Content="Подтвердите новый пароль:" Margin="0,0,0,2"/>
+                <PasswordBox x:Name="ConfirmPasswordBox" 
+                             ToolTip="Повторите ввод нового пароля" 
+                             Margin="0,0,0,20"/>
+
+                                <Button x:Name="ButtonSavePassword"
+                        Content="Сохранить новый пароль"
+                        ToolTip="Применить изменения пароля"
+                        HorizontalAlignment="Stretch"
+                        Height="38"
+                        Click="ButtonSavePassword_Click"/>
+
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>
