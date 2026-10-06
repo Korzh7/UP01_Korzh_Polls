@@ -84,15 +84,7 @@
                                        Foreground="{DynamicResource PrimaryDarkColor}"/>
 
                                                         <Border Grid.Row="1" CornerRadius="6" ClipToBounds="True" Background="#EEEEEE" Margin="0,0,0,8">
-                                <Image Stretch="UniformToFill" HorizontalAlignment="Center">
-                                    <Image.Source>
-                                        <Binding Path="Photo">
-                                            <Binding.TargetNullValue>
-                                                <ImageSource>/res/app_logo.png</ImageSource>
-                                            </Binding.TargetNullValue>
-                                        </Binding>
-                                    </Image.Source>
-                                </Image>
+                                <Image Stretch="UniformToFill" HorizontalAlignment="Center" Source="{Binding Photo}"/>
                             </Border>
 
                                                         <TextBlock Grid.Row="2" 

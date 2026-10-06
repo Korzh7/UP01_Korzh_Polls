@@ -10,7 +10,6 @@
         MinHeight="550" MinWidth="850"
         WindowStartupLocation="CenterScreen"
         Background="{DynamicResource BackgroundColor}"
-        Icon="res/app_logo.png"
         Loaded="Window_Loaded"
         Closing="Window_Closing">
     
