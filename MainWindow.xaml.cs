@@ -13,6 +13,19 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+
+        try
+        {
+            string iconPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "res", "app_logo.png");
+            if (System.IO.File.Exists(iconPath))
+            {
+                Icon = new System.Windows.Media.Imaging.BitmapImage(new Uri(iconPath, UriKind.Absolute));
+            }
+        }
+        catch
+        {
+            // Иконка опциональна
+        }
     }
 
     // Шаг 2. Пункт 5: Инициализация таймера даты и времени
