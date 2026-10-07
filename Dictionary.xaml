@@ -9,9 +9,9 @@
     <SolidColorBrush x:Key="MutedTextColor" Color="#9197A3" />
     <SolidColorBrush x:Key="AccentColor" Color="#4DC6C5" />
     <SolidColorBrush x:Key="DangerColor" Color="#DD4B42" />
-    <SolidColorBrush x:Key="BorderBrushColor" Color="#EAEBED" />
+    <SolidColorBrush x:Key="BorderBrushColor" Color="#CBD3DC" />
 
-        <FontFamily x:Key="AppFontFamily">Open Sans, Segoe UI, sans-serif</FontFamily>
+        <FontFamily x:Key="AppFontFamily">Segoe UI, Open Sans, Arial, sans-serif</FontFamily>
 
         <Style TargetType="Button">
         <Setter Property="Height" Value="36" />
@@ -96,7 +96,27 @@
         <Setter Property="FontSize" Value="13" />
         <Setter Property="Background" Value="{StaticResource SurfaceColor}" />
         <Setter Property="Foreground" Value="{StaticResource TextColor}" />
+        <Setter Property="BorderBrush" Value="{StaticResource BorderBrushColor}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="6,2" />
+    </Style>
+
+        <Style TargetType="ComboBoxItem">
+        <Setter Property="FontFamily" Value="{StaticResource AppFontFamily}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Foreground" Value="{StaticResource TextColor}" />
+        <Setter Property="Background" Value="{StaticResource SurfaceColor}" />
+        <Setter Property="Padding" Value="8,6" />
+        <Style.Triggers>
+            <Trigger Property="IsHighlighted" Value="True">
+                <Setter Property="Background" Value="{StaticResource BackgroundColor}" />
+                <Setter Property="Foreground" Value="{StaticResource TextColor}" />
+            </Trigger>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="{StaticResource AccentColor}" />
+                <Setter Property="Foreground" Value="White" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
 </ResourceDictionary>
