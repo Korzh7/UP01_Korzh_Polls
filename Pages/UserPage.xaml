@@ -28,7 +28,7 @@
 
                 <!-- Сортировка по ФИО -->
                 <TextBlock Text="Сортировка по ФИО:" VerticalAlignment="Center" Margin="5,0"/>
-                <ComboBox x:Name="sortComboBox" SelectedIndex="0" Width="150" Height="32" Margin="5,0,15,0"
+                <ComboBox x:Name="sortComboBox" SelectedIndex="0" Width="200" Height="32" Margin="5,0,15,0"
                           ToolTip="Выберите направление сортировки"
                           SelectionChanged="sortComboBox_SelectionChanged">
                     <ComboBoxItem Content="По возрастанию (А-Я)"/>
