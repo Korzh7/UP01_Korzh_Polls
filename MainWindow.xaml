@@ -51,9 +51,9 @@
 
                 <!-- Шаг 3. Пункт 5: Переключение темы приложения в MainWindow -->
                 <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
-                    <TextBlock Text="Тема:" Foreground="White" VerticalAlignment="Center" Margin="0,0,8,0" FontSize="12"/>
+                    <TextBlock Text="Тема:" Foreground="White" VerticalAlignment="Center" Margin="0,0,10,0" FontSize="13" FontWeight="SemiBold"/>
                     <ComboBox x:Name="ThemeComboBox" 
-                              Width="140" Height="28" 
+                              Width="195" Height="32" 
                               ToolTip="Выбор цветовой темы оформления"
                               SelectionChanged="ThemeComboBox_SelectionChanged">
                         <ComboBoxItem Content="Светлая (Фирменная)" IsSelected="True"/>
