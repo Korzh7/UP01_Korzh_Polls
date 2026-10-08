@@ -40,14 +40,17 @@ public partial class AuthPage : Page
             return;
         }
 
-        string hashedPassword = SecurityHelper.GetHash(PasswordBox.Password);
+        string inputLogin = TextBoxLogin.Text.Trim();
+        string inputPassword = PasswordBox.Password.Trim();
+
+        string hashedPassword = SecurityHelper.GetHash(inputPassword);
 
         try
         {
             using var db = new PollsDbContext();
             var user = db.UserAccounts
                 .AsNoTracking()
-                .FirstOrDefault(u => (u.Login == TextBoxLogin.Text || u.Email == TextBoxLogin.Text) && u.PasswordHash == hashedPassword);
+                .FirstOrDefault(u => (u.Login.ToLower() == inputLogin.ToLower() || (u.Email != null && u.Email.ToLower() == inputLogin.ToLower())) && u.PasswordHash == hashedPassword);
 
             if (user == null)
             {
