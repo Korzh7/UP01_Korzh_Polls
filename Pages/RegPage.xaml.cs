@@ -110,21 +110,25 @@ public partial class RegPage : Page
                 return;
             }
 
+            string trimmedLogin = txtbxLog.Text.Trim();
+            string trimmedFio = txtbxFIO.Text.Trim();
+            string trimmedPassword = passBxFrst.Password.Trim();
+
             // 6.5 (7.5 в нумерации методички): Создание и сохранение пользователя в БД
             string selectedRole = ((ComboBoxItem)comboBxRole.SelectedItem)?.Content?.ToString() ?? "User";
             
             // Хеширование пароля (Шаг 7)
-            string hashedPassword = SecurityHelper.GetHash(passBxFrst.Password);
+            string hashedPassword = SecurityHelper.GetHash(trimmedPassword);
 
             var newUser = new UserAccount
             {
-                Login = txtbxLog.Text.Trim(),
-                FullName = txtbxFIO.Text.Trim(),
+                Login = trimmedLogin,
+                FullName = trimmedFio,
                 Email = string.IsNullOrWhiteSpace(txtbxEmail.Text) ? null : txtbxEmail.Text.Trim(),
                 Phone = string.IsNullOrWhiteSpace(txtbxPhone.Text) ? null : txtbxPhone.Text.Trim(),
                 Role = selectedRole,
                 PasswordHash = hashedPassword,
-                Photo = "/res/user1.png" // изображение по умолчанию
+                Photo = "/res/user1.png"
             };
 
             db.UserAccounts.Add(newUser);
