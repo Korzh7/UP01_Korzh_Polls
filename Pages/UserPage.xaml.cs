@@ -32,6 +32,12 @@ public partial class UserPage : Page
         UpdateUsers();
     }
 
+    // Шаг 11: Смена пароля для пользователя
+    private void btnChangePassword_Click(object sender, RoutedEventArgs e)
+    {
+        NavigationService?.Navigate(new ChangePassPage(_loggedInUser?.Login));
+    }
+
     // Шаг 8. Пункт 8: Обработчики изменений параметров фильтрации
     private void fioFilterTextBox_TextChanged(object sender, TextChangedEventArgs e)
     {

@@ -39,8 +39,14 @@
 
                                 <Button x:Name="clearFiltersButton" Content="Очистить фильтр" 
                         ToolTip="Сбросить параметры поиска и фильтрации"
-                        Height="32" MinWidth="130"
+                        Height="32" MinWidth="130" Margin="5,0"
                         Click="clearFiltersButton_Click_1"/>
+
+                                <Button x:Name="btnChangePassword" Content="Сменить пароль" 
+                        ToolTip="Перейти к форме смены пароля учетной записи"
+                        Height="32" MinWidth="130" Margin="5,0"
+                        Background="{DynamicResource PrimaryDarkColor}"
+                        Click="btnChangePassword_Click"/>
             </WrapPanel>
         </Border>
 
