@@ -6,15 +6,17 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
 using LiveCharts;
 using LiveCharts.Wpf;
 using Microsoft.EntityFrameworkCore;
 using UP01_Korzh_Polls.Models;
-using Xceed.Words.NET;
 
 namespace UP01_Korzh_Polls.Pages;
 
-public partial class DiagrammPage : Page
+public partial class DiagrammPage : System.Windows.Controls.Page
 {
     public DiagrammPage()
     {
@@ -86,14 +88,32 @@ public partial class DiagrammPage : Page
                 var labels = new List<string>();
                 var values = new ChartValues<int>();
 
+                int maxCount = 1;
                 foreach (var cat in categories)
                 {
                     labels.Add(cat.Name);
                     int count = userPolls.Count(p => p.CategoryId == cat.Id);
                     values.Add(count);
+                    if (count > maxCount) maxCount = count;
                 }
 
                 AxisX.Labels = labels;
+                AxisX.LabelsRotation = 15; // аккуратный наклон, чтобы длинные названия категорий не налезали друг на друга
+
+                // Настройка оси Y для целочисленных значений (0, 1, 2 вместо 0.30000000000000004)
+                CartesianChartControl.AxisY.Clear();
+                CartesianChartControl.AxisY.Add(new LiveCharts.Wpf.Axis
+                {
+                    Title = "Количество созданных опросов",
+                    MinValue = 0,
+                    MaxValue = Math.Max(maxCount + 1, 3),
+                    Separator = new LiveCharts.Wpf.Separator
+                    {
+                        Step = 1,
+                        IsEnabled = true
+                    },
+                    LabelFormatter = val => val.ToString("N0")
+                });
 
                 var seriesCollection = new SeriesCollection();
                 if (chartType.Contains("Линейная"))
@@ -124,7 +144,7 @@ public partial class DiagrammPage : Page
         }
     }
 
-    // Шаг 13: Выгрузка данных в Microsoft Word (.docx)
+    // Шаг 13: Выгрузка данных в Microsoft Word (.docx) через DocumentFormat.OpenXml
     private void BtnExportWord_Click(object sender, RoutedEventArgs e)
     {
         try
@@ -134,82 +154,105 @@ public partial class DiagrammPage : Page
             var allCategories = db.Categories.ToList();
 
             string exportDir = AppDomain.CurrentDomain.BaseDirectory;
-            string filePath = Path.Combine(exportDir, "Polls_Report.docx");
+            string filePath = System.IO.Path.Combine(exportDir, "Polls_Report.docx");
 
-            using (var doc = DocX.Create(filePath))
+            using (WordprocessingDocument wordDoc = WordprocessingDocument.Create(filePath, WordprocessingDocumentType.Document))
             {
-                // Верхний колонтитул с текущей датой (Шаг 13, Пункт 4)
-                doc.AddHeaders();
-                var header = doc.Headers.Odd;
-                header.InsertParagraph($"Дата формирования отчета: {DateTime.Now:dd.MM.yyyy HH:mm}")
-                      .FontSize(9).Italic().Alignment = Xceed.Document.NET.Alignment.right;
-
-                // Нижний колонтитул с номером страниц (Шаг 13, Пункт 3)
-                doc.AddFooters();
-                var footer = doc.Footers.Odd;
-                var footerPara = footer.InsertParagraph("Страница ");
-                footerPara.AppendPageNumber(Xceed.Document.NET.PageNumberFormat.normal);
-                footerPara.Append(" из ");
-                footerPara.AppendPageCount(Xceed.Document.NET.PageNumberFormat.normal);
-                footerPara.Alignment = Xceed.Document.NET.Alignment.center;
-                footerPara.FontSize(9);
+                MainDocumentPart mainPart = wordDoc.AddMainDocumentPart();
+                mainPart.Document = new Document();
+                Body body = mainPart.Document.AppendChild(new Body());
 
                 // Заголовок документа
-                var titlePara = doc.InsertParagraph("ОТЧЕТ ПО АКТИВНОСТИ ПОЛЬЗОВАТЕЛЕЙ И ОПРОСАМ");
-                titlePara.FontSize(16).Bold().Alignment = Xceed.Document.NET.Alignment.center;
-                titlePara.SpacingAfter(20);
+                var titlePara = body.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Paragraph());
+                var titleRun = titlePara.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Run());
+                titleRun.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Text("ОТЧЕТ ПО АКТИВНОСТИ ПОЛЬЗОВАТЕЛЕЙ И ОПРОСАМ"));
+                var titleProps = titleRun.AppendChild(new RunProperties());
+                titleProps.AppendChild(new Bold());
+                titleProps.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.FontSize { Val = "32" }); // 16pt
+                titleProps.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Color { Val = "233E76" });
+
+                var datePara = body.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Paragraph());
+                var dateRun = datePara.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Run());
+                dateRun.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Text($"Дата формирования: {DateTime.Now:dd.MM.yyyy HH:mm}"));
+                var dateProps = dateRun.AppendChild(new RunProperties());
+                dateProps.AppendChild(new Italic());
+                dateProps.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.FontSize { Val = "20" });
 
                 // Цикл по пользователям (Шаг 13)
-                for (int uIdx = 0; uIdx < allUsers.Count; uIdx++)
+                foreach (var user in allUsers)
                 {
-                    var user = allUsers[uIdx];
-
-                    var userPara = doc.InsertParagraph(user.FullName);
-                    userPara.FontSize(14).Bold();
-                    userPara.SpacingBefore(10);
-                    userPara.SpacingAfter(10);
+                    // Имя пользователя
+                    var uPara = body.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Paragraph());
+                    var uRun = uPara.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Run());
+                    uRun.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Text($"Пользователь: {user.FullName} (Роль: {user.Role})"));
+                    var uProps = uRun.AppendChild(new RunProperties());
+                    uProps.AppendChild(new Bold());
+                    uProps.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.FontSize { Val = "26" });
+                    uProps.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Color { Val = "0198AF" });
 
                     // Таблица по категориям
-                    var table = doc.AddTable(allCategories.Count + 1, 2);
-                    table.Alignment = Xceed.Document.NET.Alignment.center;
-                    table.Rows[0].Cells[0].Paragraphs.First().Append("Тематическая категория").Bold();
-                    table.Rows[0].Cells[1].Paragraphs.First().Append("Количество опросов").Bold();
+                    DocumentFormat.OpenXml.Wordprocessing.Table table = new DocumentFormat.OpenXml.Wordprocessing.Table();
+                    
+                    // Стиль границы таблицы
+                    TableProperties tblProp = new TableProperties(
+                        new TableBorders(
+                            new TopBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 6 },
+                            new BottomBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 6 },
+                            new LeftBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 6 },
+                            new RightBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 6 },
+                            new InsideHorizontalBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 4 },
+                            new InsideVerticalBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 4 }
+                        )
+                    );
+                    table.AppendChild(tblProp);
 
-                    for (int i = 0; i < allCategories.Count; i++)
+                    // Шапка таблицы
+                    TableRow headerRow = new TableRow();
+                    headerRow.Append(
+                        CreateCell("Тематическая категория", true),
+                        CreateCell("Количество созданных опросов", true)
+                    );
+                    table.Append(headerRow);
+
+                    // Данные по категориям
+                    foreach (var cat in allCategories)
                     {
-                        var cat = allCategories[i];
                         int pollCount = user.Polls.Count(p => p.CategoryId == cat.Id);
-
-                        table.Rows[i + 1].Cells[0].Paragraphs.First().Append(cat.Name);
-                        table.Rows[i + 1].Cells[1].Paragraphs.First().Append(pollCount.ToString()).Alignment = Xceed.Document.NET.Alignment.center;
+                        TableRow dataRow = new TableRow();
+                        dataRow.Append(
+                            CreateCell(cat.Name, false),
+                            CreateCell(pollCount.ToString(), false)
+                        );
+                        table.Append(dataRow);
                     }
+                    body.Append(table);
 
-                    doc.InsertTable(table);
-
-                    // Максимальный и минимальный показатель
+                    // Итоги пользователя
                     int totalUserPolls = user.Polls.Count;
                     var maxCategory = allCategories
                         .Select(c => new { c.Name, Count = user.Polls.Count(p => p.CategoryId == c.Id) })
                         .OrderByDescending(x => x.Count)
                         .FirstOrDefault();
 
-                    var infoPara = doc.InsertParagraph();
-                    infoPara.SpacingBefore(10);
+                    var sumPara = body.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Paragraph());
+                    var sumRun = sumPara.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Run());
+                    string statText = $"\nВсего создано опросов: {totalUserPolls} шт.";
                     if (maxCategory != null && maxCategory.Count > 0)
                     {
-                        infoPara.Append($"Наиболее популярная категория: {maxCategory.Name} ({maxCategory.Count} опр.)\n")
-                                .Color(Xceed.Drawing.Color.DarkRed).Italic();
+                        statText += $" | Самая активная категория: «{maxCategory.Name}» ({maxCategory.Count} опр.)";
                     }
-                    infoPara.Append($"Всего создано опросов пользователем: {totalUserPolls} шт.\n")
-                            .Color(Xceed.Drawing.Color.DarkGreen).Bold();
+                    sumRun.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Text(statText));
+                    var sumProps = sumRun.AppendChild(new RunProperties());
+                    sumProps.AppendChild(new Bold());
+                    sumProps.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.FontSize { Val = "22" });
+                    sumProps.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Color { Val = "256569" });
 
-                    if (uIdx < allUsers.Count - 1)
-                    {
-                        doc.InsertSectionPageBreak();
-                    }
+                    // Разделитель
+                    var emptyPara = body.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Paragraph());
+                    emptyPara.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Run(new DocumentFormat.OpenXml.Wordprocessing.Text(" ")));
                 }
 
-                doc.Save();
+                mainPart.Document.Save();
             }
 
             MessageBox.Show($"Документ Word успешно сформирован и сохранен:\n{filePath}", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -219,6 +262,23 @@ public partial class DiagrammPage : Page
         {
             MessageBox.Show($"Ошибка при экспорте в Word: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
         }
+    }
+
+    private TableCell CreateCell(string text, bool isHeader)
+    {
+        TableCell cell = new TableCell();
+        var p = cell.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Paragraph());
+        var r = p.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Run());
+        r.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Text(text));
+
+        var rp = r.AppendChild(new RunProperties());
+        rp.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.FontSize { Val = isHeader ? "22" : "20" });
+        if (isHeader)
+        {
+            rp.AppendChild(new Bold());
+            rp.AppendChild(new DocumentFormat.OpenXml.Wordprocessing.Color { Val = "233E76" });
+        }
+        return cell;
     }
 
     // Шаг 14: Выгрузка данных в Microsoft Excel (.xlsx)
@@ -234,7 +294,7 @@ public partial class DiagrammPage : Page
                 .ToList();
 
             string exportDir = AppDomain.CurrentDomain.BaseDirectory;
-            string filePath = Path.Combine(exportDir, "Polls_Report.xlsx");
+            string filePath = System.IO.Path.Combine(exportDir, "Polls_Report.xlsx");
 
             using (var workbook = new XLWorkbook())
             {
