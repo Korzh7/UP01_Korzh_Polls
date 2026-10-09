@@ -15,6 +15,15 @@ public partial class ChangePassPage : Page
         InitializeComponent();
     }
 
+    public ChangePassPage(string? prefilledLogin) : this()
+    {
+        if (!string.IsNullOrWhiteSpace(prefilledLogin))
+        {
+            TbLogin.Text = prefilledLogin;
+            TbLogin.IsEnabled = false; // блокируем логин для текущего авторизованного пользователя
+        }
+    }
+
     // Шаг 11. Пункт 2: Обработка нажатия на кнопку сохранения
     private void ButtonSavePassword_Click(object sender, RoutedEventArgs e)
     {

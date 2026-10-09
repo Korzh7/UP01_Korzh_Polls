@@ -24,7 +24,7 @@
                 <!-- Шаг 12. Пункт 6: Выбор пользователя с DisplayMemberPath="FullName" -->
                 <TextBlock Text="Пользователь (автор):" VerticalAlignment="Center" Margin="5,0"/>
                 <ComboBox x:Name="CmbUser" DisplayMemberPath="FullName" 
-                          Width="220" Height="32" Margin="5,0,15,0"
+                          Width="260" Height="32" Margin="5,0,15,0"
                           ToolTip="Выберите пользователя для построения отчета и графика"
                           SelectionChanged="UpdateChart"/>
 
