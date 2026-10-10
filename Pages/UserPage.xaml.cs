@@ -16,11 +16,71 @@ public partial class UserPage : Page
     {
         InitializeComponent();
         UpdateUsers();
+        LoadPolls();
     }
 
     public UserPage(UserAccount user) : this()
     {
         _loggedInUser = user;
+    }
+
+    private void LoadPolls()
+    {
+        try
+        {
+            using var db = new PollsDbContext();
+            DataGridPollsForUser.ItemsSource = db.Polls
+                .Include(p => p.User)
+                .Include(p => p.Category)
+                .Where(p => p.Status == "Активен")
+                .AsNoTracking()
+                .ToList();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Ошибка при загрузке опросов: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
+
+    private void btnVotePoll_Click(object sender, RoutedEventArgs e)
+    {
+        if (DataGridPollsForUser.SelectedItem is not Poll selectedPoll)
+        {
+            MessageBox.Show("Пожалуйста, выберите опрос из списка, чтобы проголосовать!", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
+            return;
+        }
+
+        try
+        {
+            using var db = new PollsDbContext();
+
+            // Проверяем, голосовал ли уже пользователь
+            int userId = _loggedInUser?.Id ?? 2; // текущий пользователь или дефолтный пользователь
+            bool alreadyVoted = db.Responses.Any(r => r.PollId == selectedPoll.Id && r.UserId == userId);
+
+            if (alreadyVoted)
+            {
+                MessageBox.Show($"Вы уже принимали участие в опросе «{selectedPoll.Title}». Повторное голосование невозможно.", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            // Фиксируем участие пользователя в опросе
+            var response = new Response
+            {
+                PollId = selectedPoll.Id,
+                UserId = userId,
+                CreatedAt = DateTime.Now
+            };
+
+            db.Responses.Add(response);
+            db.SaveChanges();
+
+            MessageBox.Show($"Спасибо! Ваш голос в опросе «{selectedPoll.Title}» успешно учтён и зафиксирован в системе.", "Голос принят", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Ошибка голосования: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 
     // Шаг 8. Пункт 7: Очистка фильтров

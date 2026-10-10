@@ -78,7 +78,7 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Column="0" 
-                           Text="УП.01.01 — Корж С.В. | Платформа опросов и голосований" 
+                           Text="УП.01.01 — Корж С.А. | Платформа опросов и голосований" 
                            Foreground="White" 
                            VerticalAlignment="Center" 
                            FontSize="12"/>
