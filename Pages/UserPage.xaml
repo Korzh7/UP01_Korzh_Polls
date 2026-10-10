@@ -5,111 +5,178 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="950"
-      Title="Личный кабинет пользователя — Список пользователей">
+      Title="Личный кабинет пользователя">
 
-        <Grid Margin="15">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <Grid Margin="15">
+        <TabControl Background="Transparent" BorderThickness="0">
+            
+                        <TabItem Header="📋 Доступные опросы" FontSize="14" FontWeight="SemiBold" Padding="15,6">
+                <Grid Margin="0,10,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-                <Border Grid.Row="0" Background="{DynamicResource SurfaceColor}" 
-                BorderBrush="{DynamicResource BorderBrushColor}" 
-                BorderThickness="1" CornerRadius="6" Padding="12,8" Margin="0,0,0,12">
-            <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                
-                                <TextBlock Text="Введите ФИО для поиска:" VerticalAlignment="Center" Margin="5,0"/>
-                <TextBox x:Name="fioFilterTextBox" MinWidth="160" Height="32" Margin="5,0,15,0"
-                         ToolTip="Введите часть ФИО для фильтрации списка"
-                         TextChanged="fioFilterTextBox_TextChanged"/>
-
-                                <TextBlock Text="Сортировка по ФИО:" VerticalAlignment="Center" Margin="5,0"/>
-                <ComboBox x:Name="sortComboBox" SelectedIndex="0" Width="200" Height="32" Margin="5,0,15,0"
-                          ToolTip="Выберите направление сортировки"
-                          SelectionChanged="sortComboBox_SelectionChanged">
-                    <ComboBoxItem Content="По возрастанию (А-Я)"/>
-                    <ComboBoxItem Content="По убыванию (Я-А)"/>
-                </ComboBox>
-
-                                <CheckBox x:Name="onlyAdminCheckBox" Content="Только администраторы" 
-                          VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="5,0,15,0"
-                          ToolTip="Отобразить только пользователей с ролью Admin"
-                          Checked="onlyAdminCheckBox_Checked" 
-                          Unchecked="onlyAdminCheckBox_Unchecked"/>
-
-                                <Button x:Name="clearFiltersButton" Content="Очистить фильтр" 
-                        ToolTip="Сбросить параметры поиска и фильтрации"
-                        Height="32" MinWidth="130" Margin="5,0"
-                        Click="clearFiltersButton_Click_1"/>
-
-                                <Button x:Name="btnChangePassword" Content="Сменить пароль" 
-                        ToolTip="Перейти к форме смены пароля учетной записи"
-                        Height="32" MinWidth="130" Margin="5,0"
-                        Background="{DynamicResource PrimaryDarkColor}"
-                        Click="btnChangePassword_Click"/>
-            </WrapPanel>
-        </Border>
-
-                <ListView x:Name="ListUser" Grid.Row="1" 
-                  BorderThickness="0"
-                  Background="Transparent"
-                  HorizontalContentAlignment="Center" 
-                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Border Background="{DynamicResource SurfaceColor}" 
+                                        <Border Grid.Row="0" Background="{DynamicResource SurfaceColor}" 
                             BorderBrush="{DynamicResource BorderBrushColor}" 
-                            BorderThickness="1" 
-                            CornerRadius="8" 
-                            Margin="8" 
-                            Padding="12" 
-                            Width="220" 
-                            Height="310">
+                            BorderThickness="1" CornerRadius="6" Padding="12,10" Margin="0,0,0,10">
                         <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="180"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-
-                                                        <TextBlock Grid.Row="0" 
-                                       Text="{Binding FullName}" 
-                                       FontWeight="Bold" 
-                                       FontSize="14" 
-                                       TextWrapping="Wrap" 
-                                       TextAlignment="Center" 
-                                       HorizontalAlignment="Center" 
-                                       Margin="0,0,0,6"
-                                       Foreground="{DynamicResource PrimaryDarkColor}"/>
-
-                                                        <Border Grid.Row="1" CornerRadius="6" ClipToBounds="True" Background="#EEEEEE" Margin="0,0,0,8">
-                                <Image Stretch="UniformToFill" HorizontalAlignment="Center" Source="{Binding Photo}"/>
-                            </Border>
-
-                                                        <TextBlock Grid.Row="2" 
-                                       Text="{Binding Role, StringFormat='Роль: {0}'}" 
-                                       FontSize="12" 
-                                       FontWeight="SemiBold"
-                                       HorizontalAlignment="Center"
-                                       Foreground="{DynamicResource PrimaryColor}"/>
-
-                                                        <TextBlock Grid.Row="3" 
-                                       Text="{Binding Login, StringFormat='Логин: @{0}'}" 
-                                       FontSize="11" 
-                                       HorizontalAlignment="Center"
-                                       Foreground="{DynamicResource MutedTextColor}"
-                                       Margin="0,2,0,0"/>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" 
+                                       Text="Выберите активный опрос из списка ниже и нажмите «Принять участие в голосовании»" 
+                                       VerticalAlignment="Center" 
+                                       FontSize="13" 
+                                       Foreground="{DynamicResource TextColor}"/>
+                            <Button x:Name="btnVotePoll" 
+                                    Grid.Column="1"
+                                    Content="Принять участие в голосовании" 
+                                    ToolTip="Отдать голос в выбранном опросе"
+                                    Height="34" MinWidth="220"
+                                    Background="{DynamicResource PrimaryColor}"
+                                    Foreground="White"
+                                    Click="btnVotePoll_Click"/>
                         </Grid>
                     </Border>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+
+                                        <DataGrid Grid.Row="1" x:Name="DataGridPollsForUser"
+                              AutoGenerateColumns="False" 
+                              IsReadOnly="True"
+                              SelectionMode="Single"
+                              Background="{DynamicResource SurfaceColor}"
+                              RowBackground="{DynamicResource SurfaceColor}"
+                              AlternatingRowBackground="#FAFAFA"
+                              BorderBrush="{DynamicResource BorderBrushColor}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="№" Binding="{Binding Id}" Width="50"/>
+                            <DataGridTextColumn Header="Название опроса" Binding="{Binding Title}" Width="280"/>
+                            <DataGridTextColumn Header="Категория" Binding="{Binding Category.Name}" Width="200"/>
+                            <DataGridTextColumn Header="Создатель опроса" Binding="{Binding User.FullName}" Width="200"/>
+                            <DataGridTextColumn Header="Дата создания" Binding="{Binding CreatedAt, StringFormat='dd.MM.yyyy'}" Width="110"/>
+                            <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="100"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+                        <TabItem Header="👥 Каталог участников" FontSize="14" FontWeight="SemiBold" Padding="15,6">
+                <Grid Margin="0,10,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                                        <Border Grid.Row="0" Background="{DynamicResource SurfaceColor}" 
+                            BorderBrush="{DynamicResource BorderBrushColor}" 
+                            BorderThickness="1" CornerRadius="6" Padding="12,10" Margin="0,0,0,12">
+                        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            
+                                                        <TextBlock Text="Введите ФИО для поиска:" VerticalAlignment="Center" Margin="5,0"/>
+                            <TextBox x:Name="fioFilterTextBox" MinWidth="160" Height="32" Margin="5,0,15,0"
+                                     ToolTip="Введите часть ФИО для фильтрации списка"
+                                     TextChanged="fioFilterTextBox_TextChanged"/>
+
+                                                        <TextBlock Text="Сортировка по ФИО:" VerticalAlignment="Center" Margin="5,0"/>
+                            <ComboBox x:Name="sortComboBox" SelectedIndex="0" Width="200" Height="32" Margin="5,0,15,0"
+                                      ToolTip="Выберите направление сортировки"
+                                      SelectionChanged="sortComboBox_SelectionChanged">
+                                <ComboBoxItem Content="По возрастанию (А-Я)"/>
+                                <ComboBoxItem Content="По убыванию (Я-А)"/>
+                            </ComboBox>
+
+                                                        <CheckBox x:Name="onlyAdminCheckBox" Content="Только администраторы" 
+                                      VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="5,0,15,0"
+                                      ToolTip="Отобразить только пользователей с ролью Admin"
+                                      Checked="onlyAdminCheckBox_Checked" 
+                                      Unchecked="onlyAdminCheckBox_Unchecked"/>
+
+                                                        <Button x:Name="clearFiltersButton" Content="Очистить фильтр" 
+                                    ToolTip="Сбросить параметры поиска и фильтрации"
+                                    Height="34" MinWidth="135" Margin="8,4"
+                                    Click="clearFiltersButton_Click_1"/>
+
+                                                        <Button x:Name="btnChangePassword" Content="Сменить пароль" 
+                                    ToolTip="Перейти к форме смены пароля учетной записи"
+                                    Height="34" MinWidth="135" Margin="8,4"
+                                    Background="{DynamicResource AccentColor}"
+                                    Foreground="White"
+                                    Click="btnChangePassword_Click"/>
+                        </WrapPanel>
+                    </Border>
+
+                                        <ListView x:Name="ListUser" Grid.Row="1" 
+                              BorderThickness="0"
+                              Background="Transparent"
+                              HorizontalContentAlignment="Center" 
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="{DynamicResource SurfaceColor}" 
+                                        BorderBrush="{DynamicResource BorderBrushColor}" 
+                                        BorderThickness="1" 
+                                        CornerRadius="8" 
+                                        Margin="8" 
+                                        Padding="12" 
+                                        Width="220" 
+                                        Height="310">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="180"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                                                                <TextBlock Grid.Row="0" 
+                                                   Text="{Binding FullName}" 
+                                                   FontWeight="Bold" 
+                                                   FontSize="14" 
+                                                   TextWrapping="Wrap" 
+                                                   TextAlignment="Center" 
+                                                   HorizontalAlignment="Center" 
+                                                   Margin="0,0,0,6"
+                                                   Foreground="{DynamicResource PrimaryDarkColor}"/>
+
+                                                                                <Border Grid.Row="1" CornerRadius="6" ClipToBounds="True" Background="#EAEBED" Margin="0,0,0,8">
+                                            <Image Stretch="UniformToFill" HorizontalAlignment="Center">
+                                                <Image.Source>
+                                                    <Binding Path="Photo">
+                                                        <Binding.TargetNullValue>
+                                                            <BitmapImage UriSource="/res/app_logo.png"/>
+                                                        </Binding.TargetNullValue>
+                                                    </Binding>
+                                                </Image.Source>
+                                            </Image>
+                                        </Border>
+
+                                                                                <TextBlock Grid.Row="2" 
+                                                   Text="{Binding Role, StringFormat='Роль: {0}'}" 
+                                                   FontSize="12" 
+                                                   FontWeight="SemiBold"
+                                                   HorizontalAlignment="Center"
+                                                   Foreground="{DynamicResource PrimaryColor}"/>
+
+                                                                                <TextBlock Grid.Row="3" 
+                                                   Text="{Binding Login, StringFormat='Логин: @{0}'}" 
+                                                   FontSize="11" 
+                                                   HorizontalAlignment="Center"
+                                                   Foreground="{DynamicResource MutedTextColor}"
+                                                   Margin="0,2,0,0"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Page>
