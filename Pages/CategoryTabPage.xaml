@@ -16,11 +16,7 @@
         <DataGrid Grid.Row="0" x:Name="DataGridCategory" 
                   AutoGenerateColumns="False" 
                   IsReadOnly="True"
-                  SelectionMode="Extended"
-                  Background="{DynamicResource SurfaceColor}"
-                  RowBackground="{DynamicResource SurfaceColor}"
-                  AlternatingRowBackground="#FAFAFA"
-                  BorderBrush="{DynamicResource BorderBrushColor}">
+                  SelectionMode="Extended">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="80"/>
                 <DataGridTextColumn Header="Название категории" Binding="{Binding Name}" Width="400"/>

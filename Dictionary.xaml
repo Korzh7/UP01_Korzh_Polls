@@ -3,6 +3,7 @@
 
         <SolidColorBrush x:Key="PrimaryColor" Color="#0198AF" />
     <SolidColorBrush x:Key="PrimaryDarkColor" Color="#233E76" />
+    <SolidColorBrush x:Key="HeaderFooterBarColor" Color="#233E76" />
     <SolidColorBrush x:Key="BackgroundColor" Color="#F3F3F3" />
     <SolidColorBrush x:Key="SurfaceColor" Color="#FFFFFF" />
     <SolidColorBrush x:Key="TextColor" Color="#233E76" />
@@ -10,6 +11,12 @@
     <SolidColorBrush x:Key="AccentColor" Color="#4DC6C5" />
     <SolidColorBrush x:Key="DangerColor" Color="#DD4B42" />
     <SolidColorBrush x:Key="BorderBrushColor" Color="#CBD3DC" />
+
+        <SolidColorBrush x:Key="DataGridHeaderBackground" Color="#233E76" />
+    <SolidColorBrush x:Key="DataGridHeaderForeground" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="DataGridRowBackground" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="DataGridAlternatingRowBackground" Color="#F5F7FA" />
+    <SolidColorBrush x:Key="DataGridRowHoverBackground" Color="#E8F4F8" />
 
         <FontFamily x:Key="AppFontFamily">Segoe UI, Open Sans, Arial, sans-serif</FontFamily>
 
@@ -205,6 +212,137 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+        <Style TargetType="CheckBox">
+        <Setter Property="FontFamily" Value="{StaticResource AppFontFamily}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Foreground" Value="{DynamicResource TextColor}" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Cursor" Value="Hand" />
+    </Style>
+
+        <Style TargetType="RadioButton">
+        <Setter Property="FontFamily" Value="{StaticResource AppFontFamily}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Foreground" Value="{DynamicResource TextColor}" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Cursor" Value="Hand" />
+    </Style>
+
+        <Style TargetType="TabControl">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+    </Style>
+
+        <Style TargetType="TabItem">
+        <Setter Property="FontFamily" Value="{StaticResource AppFontFamily}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{DynamicResource TextColor}" />
+        <Setter Property="Background" Value="{DynamicResource SurfaceColor}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushColor}" />
+        <Setter Property="BorderThickness" Value="1,1,1,0" />
+        <Setter Property="Padding" Value="16,8" />
+        <Setter Property="Margin" Value="0,0,4,0" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabItem">
+                    <Border x:Name="TabBorder"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="6,6,0,0"
+                            Padding="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="TabContent"
+                                          ContentSource="Header"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          RecognizesAccessKey="True" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="TabBorder" Property="Background" Value="{DynamicResource AccentColor}" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="TabBorder" Property="Background" Value="{DynamicResource PrimaryColor}" />
+                            <Setter TargetName="TabBorder" Property="BorderBrush" Value="{DynamicResource PrimaryColor}" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+        <Style TargetType="DataGridColumnHeader">
+        <Setter Property="Background" Value="{DynamicResource DataGridHeaderBackground}" />
+        <Setter Property="Foreground" Value="{DynamicResource DataGridHeaderForeground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushColor}" />
+        <Setter Property="BorderThickness" Value="0,0,1,1" />
+        <Setter Property="FontFamily" Value="{StaticResource AppFontFamily}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Padding" Value="10,8" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+
+        <Style TargetType="DataGridCell">
+        <Setter Property="FontFamily" Value="{StaticResource AppFontFamily}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Foreground" Value="{DynamicResource TextColor}" />
+        <Setter Property="Padding" Value="8,4" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="DataGridCell">
+                    <Border Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            Padding="{TemplateBinding Padding}">
+                        <ContentPresenter VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="{DynamicResource PrimaryColor}" />
+                <Setter Property="Foreground" Value="White" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+        <Style TargetType="DataGridRow">
+        <Setter Property="FontFamily" Value="{StaticResource AppFontFamily}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Foreground" Value="{DynamicResource TextColor}" />
+        <Setter Property="Margin" Value="0,1" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource DataGridRowHoverBackground}" />
+            </Trigger>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="{DynamicResource PrimaryColor}" />
+                <Setter Property="Foreground" Value="White" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+        <Style TargetType="DataGrid">
+        <Setter Property="Background" Value="{DynamicResource SurfaceColor}" />
+        <Setter Property="RowBackground" Value="{DynamicResource DataGridRowBackground}" />
+        <Setter Property="AlternatingRowBackground" Value="{DynamicResource DataGridAlternatingRowBackground}" />
+        <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource BorderBrushColor}" />
+        <Setter Property="VerticalGridLinesBrush" Value="{DynamicResource BorderBrushColor}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushColor}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="RowHeaderWidth" Value="0" />
+        <Setter Property="GridLinesVisibility" Value="Horizontal" />
+        <Setter Property="FontFamily" Value="{StaticResource AppFontFamily}" />
     </Style>
 
 </ResourceDictionary>

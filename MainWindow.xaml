@@ -20,7 +20,7 @@
             <RowDefinition Height="45"/>
         </Grid.RowDefinitions>
 
-                <Border Grid.Row="0" Background="{DynamicResource PrimaryDarkColor}" Padding="10,0">
+                <Border Grid.Row="0" Background="{DynamicResource HeaderFooterBarColor}" Padding="10,0">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -63,7 +63,7 @@
                NavigationUIVisibility="Hidden" 
                Navigated="MainFrame_Navigated"/>
 
-                <Border Grid.Row="2" Background="{DynamicResource PrimaryDarkColor}" Padding="15,0">
+                <Border Grid.Row="2" Background="{DynamicResource HeaderFooterBarColor}" Padding="15,0">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
