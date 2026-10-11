@@ -22,7 +22,7 @@
         </Grid.RowDefinitions>
 
         <!-- Верхняя строка (Row 0): Кнопка Назад, динамический заголовок страницы, переключатель темы -->
-        <Border Grid.Row="0" Background="{DynamicResource PrimaryDarkColor}" Padding="10,0">
+        <Border Grid.Row="0" Background="{DynamicResource HeaderFooterBarColor}" Padding="10,0">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -70,7 +70,7 @@
                Navigated="MainFrame_Navigated"/>
 
         <!-- Нижняя строка (Row 2): Авторские сведения и текущая дата/время (Пункт 5) -->
-        <Border Grid.Row="2" Background="{DynamicResource PrimaryDarkColor}" Padding="15,0">
+        <Border Grid.Row="2" Background="{DynamicResource HeaderFooterBarColor}" Padding="15,0">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
