@@ -9,6 +9,7 @@
         Height="650" Width="1000"
         MinHeight="550" MinWidth="850"
         WindowStartupLocation="CenterScreen"
+        Icon="/res/app_logo.png"
         Background="{DynamicResource BackgroundColor}"
         Loaded="Window_Loaded"
         Closing="Window_Closing">
@@ -21,7 +22,7 @@
             <RowDefinition Height="45"/>
         </Grid.RowDefinitions>
 
-        <!-- Верхняя строка (Row 0): Кнопка Назад, динамический заголовок страницы, переключатель темы -->
+        <!-- Верхняя строка (Row 0): Кнопка Назад, динамический заголовок страницы, логотип, переключатель темы -->
         <Border Grid.Row="0" Background="{DynamicResource HeaderFooterBarColor}" Padding="10,0">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -39,15 +40,20 @@
                         Visibility="Hidden"
                         MinWidth="90" Height="32" Margin="0,0,10,0"/>
 
-                <!-- Динамический заголовок страницы -->
-                <TextBlock x:Name="PageTitle" 
-                           Grid.Column="1"
-                           Text="Авторизация" 
-                           Foreground="White" 
-                           FontSize="16" 
-                           FontWeight="Bold" 
-                           VerticalAlignment="Center" 
-                           Margin="10,0"/>
+                <!-- Шаг 2. Логотип приложения и динамический заголовок страницы -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="5,0">
+                    <Border CornerRadius="4" ClipToBounds="True" Width="30" Height="30" Margin="0,0,10,0" Background="Transparent">
+                        <Image Source="/res/app_logo.png" 
+                               Stretch="Uniform" 
+                               ToolTip="Платформа проведения опросов и голосований"/>
+                    </Border>
+                    <TextBlock x:Name="PageTitle" 
+                               Text="Авторизация" 
+                               Foreground="White" 
+                               FontSize="16" 
+                               FontWeight="Bold" 
+                               VerticalAlignment="Center"/>
+                </StackPanel>
 
                 <!-- Шаг 3. Пункт 5: Переключение темы приложения в MainWindow -->
                 <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">

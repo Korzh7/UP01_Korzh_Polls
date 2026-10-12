@@ -153,13 +153,13 @@
                                                    Margin="0,0,0,6"
                                                    Foreground="{DynamicResource PrimaryDarkColor}"/>
 
-                                        <!-- Фото пользователя (логотип платформы или загруженное фото) -->
+                                        <!-- Фото пользователя (загруженное фото или аватар по умолчанию) -->
                                         <Border Grid.Row="1" CornerRadius="6" ClipToBounds="True" Background="{DynamicResource BackgroundColor}" Margin="0,0,0,8">
-                                            <Image Stretch="UniformToFill" HorizontalAlignment="Center">
+                                            <Image Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
                                                 <Image.Source>
                                                     <Binding Path="Photo">
                                                         <Binding.TargetNullValue>
-                                                            <BitmapImage UriSource="/res/app_logo.png"/>
+                                                            <BitmapImage UriSource="/res/default_avatar.png"/>
                                                         </Binding.TargetNullValue>
                                                     </Binding>
                                                 </Image.Source>

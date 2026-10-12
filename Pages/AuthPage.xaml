@@ -16,6 +16,11 @@
                 Width="460">
             <StackPanel HorizontalAlignment="Stretch">
                 
+                <!-- Логотип платформы опросов и голосований -->
+                <Border CornerRadius="8" ClipToBounds="True" Width="72" Height="72" HorizontalAlignment="Center" Margin="0,0,0,15">
+                    <Image Source="/res/app_logo.png" Stretch="Uniform" ToolTip="Логотип платформы"/>
+                </Border>
+
                 <TextBlock Text="ВХОД В СИСТЕМУ" 
                            FontSize="20" 
                            FontWeight="Bold" 
