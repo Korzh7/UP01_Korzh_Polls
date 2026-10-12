@@ -21,6 +21,9 @@
 
   <ItemGroup>
     <Resource Include="res\**\*" />
+    <Content Include="res\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

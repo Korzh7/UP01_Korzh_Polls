@@ -16,11 +16,8 @@ public partial class MainWindow : Window
 
         try
         {
-            string iconPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "res", "app_logo.png");
-            if (System.IO.File.Exists(iconPath))
-            {
-                Icon = new System.Windows.Media.Imaging.BitmapImage(new Uri(iconPath, UriKind.Absolute));
-            }
+            var uri = new Uri("pack://application:,,,/res/app_logo.png", UriKind.Absolute);
+            Icon = System.Windows.Media.Imaging.BitmapFrame.Create(uri);
         }
         catch
         {
