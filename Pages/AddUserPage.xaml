@@ -30,7 +30,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Label Content="Логин:*" Grid.Column="0"/>
-                    <TextBox x:Name="TBLogin" Text="{Binding Login}" Grid.Column="1" ToolTip="Введите логин"/>
+                    <TextBox x:Name="TBLogin" Text="{Binding Login, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Column="1" ToolTip="Введите логин"/>
                 </Grid>
 
                 <Grid Margin="0,0,0,10">
@@ -60,7 +60,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Label Content="ФИО:*" Grid.Column="0"/>
-                    <TextBox x:Name="TBFio" Text="{Binding FullName}" Grid.Column="1" ToolTip="Введите полное ФИО"/>
+                    <TextBox x:Name="TBFio" Text="{Binding FullName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Column="1" ToolTip="Введите полное ФИО"/>
                 </Grid>
 
                 <Grid Margin="0,0,0,10">
@@ -69,7 +69,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Label Content="Email:" Grid.Column="0"/>
-                    <TextBox x:Name="TBEmail" Text="{Binding Email}" Grid.Column="1" ToolTip="Введите адрес электронной почты"/>
+                    <TextBox x:Name="TBEmail" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Column="1" ToolTip="Введите адрес электронной почты"/>
                 </Grid>
 
                 <Grid Margin="0,0,0,10">
@@ -78,7 +78,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Label Content="Телефон:" Grid.Column="0"/>
-                    <TextBox x:Name="TBPhone" Text="{Binding Phone}" Grid.Column="1" ToolTip="Введите номер телефона"/>
+                    <TextBox x:Name="TBPhone" Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Column="1" ToolTip="Введите номер телефона"/>
                 </Grid>
 
                 <Grid Margin="0,0,0,25">
@@ -87,7 +87,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Label Content="Фотография (путь):" Grid.Column="0"/>
-                    <TextBox x:Name="TBPhoto" Text="{Binding Photo}" Grid.Column="1" ToolTip="Относительный или абсолютный путь к фото"/>
+                    <TextBox x:Name="TBPhoto" Text="{Binding Photo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Column="1" ToolTip="Относительный или абсолютный путь к фото"/>
                 </Grid>
 
                 <!-- Кнопки сохранения и очистки -->

@@ -28,6 +28,8 @@ public partial class AddCategoryPage : Page
     // Шаг 10. Пункт 11: Сохранение категории
     private void ButtonSaveCategory_Click(object sender, RoutedEventArgs e)
     {
+        _currentCategory.Name = TBCategoryName.Text?.Trim() ?? string.Empty;
+
         var errors = new StringBuilder();
 
         if (string.IsNullOrWhiteSpace(_currentCategory.Name))
@@ -68,6 +70,7 @@ public partial class AddCategoryPage : Page
 
     private void ButtonClean_Click(object sender, RoutedEventArgs e)
     {
-        TBCategoryName.Text = "";
+        TBCategoryName.Text = string.Empty;
+        _currentCategory.Name = string.Empty;
     }
 }
