@@ -18,15 +18,22 @@
                   AutoGenerateColumns="False" 
                   IsReadOnly="True"
                   SelectionMode="Extended">
+            <DataGrid.Resources>
+                <Style x:Key="WrapTextColumnStyle" TargetType="TextBlock">
+                    <Setter Property="TextWrapping" Value="Wrap"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="Padding" Value="4,2"/>
+                </Style>
+            </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
-                <DataGridTextColumn Header="Логин" Binding="{Binding Login}" Width="120"/>
-                <DataGridTextColumn Header="Роль" Binding="{Binding Role}" Width="90"/>
-                <DataGridTextColumn Header="ФИО" Binding="{Binding FullName}" Width="220"/>
-                <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="160"/>
-                <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" Width="140"/>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="45"/>
+                <DataGridTextColumn Header="Логин" Binding="{Binding Login}" Width="110"/>
+                <DataGridTextColumn Header="Роль" Binding="{Binding Role}" Width="85"/>
+                <DataGridTextColumn Header="ФИО" Binding="{Binding FullName}" Width="1.8*" ElementStyle="{StaticResource WrapTextColumnStyle}"/>
+                <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="1.4*" ElementStyle="{StaticResource WrapTextColumnStyle}"/>
+                <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" Width="125"/>
                 
-                <DataGridTemplateColumn Header="Действия" Width="*">
+                <DataGridTemplateColumn Header="Действия" Width="130">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button x:Name="ButtonEdit" 

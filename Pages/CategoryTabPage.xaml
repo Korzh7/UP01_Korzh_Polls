@@ -18,11 +18,18 @@
                   AutoGenerateColumns="False" 
                   IsReadOnly="True"
                   SelectionMode="Extended">
+            <DataGrid.Resources>
+                <Style x:Key="WrapTextColumnStyle" TargetType="TextBlock">
+                    <Setter Property="TextWrapping" Value="Wrap"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="Padding" Value="4,2"/>
+                </Style>
+            </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="80"/>
-                <DataGridTextColumn Header="Название категории" Binding="{Binding Name}" Width="400"/>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60"/>
+                <DataGridTextColumn Header="Название категории" Binding="{Binding Name}" Width="*" ElementStyle="{StaticResource WrapTextColumnStyle}"/>
 
-                <DataGridTemplateColumn Header="Действия" Width="*">
+                <DataGridTemplateColumn Header="Действия" Width="140">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button x:Name="ButtonEdit" 
