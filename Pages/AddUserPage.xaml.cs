@@ -37,6 +37,13 @@ public partial class AddUserPage : Page
     // Шаг 10. Пункт 7: Логика кнопки Сохранить
     private void ButtonSave_Click(object sender, RoutedEventArgs e)
     {
+        // Синхронизация данных с полями ввода
+        _currentUser.Login = TBLogin.Text?.Trim() ?? string.Empty;
+        _currentUser.FullName = TBFio.Text?.Trim() ?? string.Empty;
+        _currentUser.Email = string.IsNullOrWhiteSpace(TBEmail.Text) ? null : TBEmail.Text.Trim();
+        _currentUser.Phone = string.IsNullOrWhiteSpace(TBPhone.Text) ? null : TBPhone.Text.Trim();
+        _currentUser.Photo = string.IsNullOrWhiteSpace(TBPhoto.Text) ? null : TBPhoto.Text.Trim();
+
         var errors = new StringBuilder();
 
         if (string.IsNullOrWhiteSpace(_currentUser.Login))
@@ -103,12 +110,18 @@ public partial class AddUserPage : Page
     // Шаг 10. Пункт 7: Логика кнопки Очистить
     private void ButtonClean_Click(object sender, RoutedEventArgs e)
     {
-        TBLogin.Text = "";
-        TBPass.Text = "";
-        TBFio.Text = "";
-        TBEmail.Text = "";
-        TBPhone.Text = "";
-        TBPhoto.Text = "";
+        TBLogin.Text = string.Empty;
+        TBPass.Text = string.Empty;
+        TBFio.Text = string.Empty;
+        TBEmail.Text = string.Empty;
+        TBPhone.Text = string.Empty;
+        TBPhoto.Text = string.Empty;
         cmbRole.SelectedIndex = 0;
+
+        _currentUser.Login = string.Empty;
+        _currentUser.FullName = string.Empty;
+        _currentUser.Email = null;
+        _currentUser.Phone = null;
+        _currentUser.Photo = null;
     }
 }

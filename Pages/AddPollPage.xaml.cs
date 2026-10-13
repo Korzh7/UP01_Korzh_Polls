@@ -47,6 +47,9 @@ public partial class AddPollPage : Page
     // Шаг 10. Пункт 15: Сохранение опроса с валидацией
     private void ButtonSave_Click(object sender, RoutedEventArgs e)
     {
+        _currentPoll.Title = TBPollTitle.Text?.Trim() ?? string.Empty;
+        _currentPoll.Description = string.IsNullOrWhiteSpace(TBPollDesc.Text) ? null : TBPollDesc.Text.Trim();
+
         var errors = new StringBuilder();
 
         if (string.IsNullOrWhiteSpace(_currentPoll.Title))
@@ -104,11 +107,14 @@ public partial class AddPollPage : Page
 
     private void ButtonClean_Click(object sender, RoutedEventArgs e)
     {
-        TBPollTitle.Text = "";
-        TBPollDesc.Text = "";
+        TBPollTitle.Text = string.Empty;
+        TBPollDesc.Text = string.Empty;
         if (CBUser.Items.Count > 0) CBUser.SelectedIndex = -1;
         if (CBCategory.Items.Count > 0) CBCategory.SelectedIndex = -1;
         CBStatus.SelectedIndex = 0;
         ChbAnonymous.IsChecked = false;
+
+        _currentPoll.Title = string.Empty;
+        _currentPoll.Description = string.Empty;
     }
 }

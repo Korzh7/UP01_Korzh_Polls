@@ -105,6 +105,7 @@ public partial class DiagrammPage : System.Windows.Controls.Page
                 CartesianChartControl.AxisY.Add(new LiveCharts.Wpf.Axis
                 {
                     Title = "Количество созданных опросов",
+                    Foreground = (System.Windows.Media.Brush)FindResource("TextColor"),
                     MinValue = 0,
                     MaxValue = Math.Max(maxCount + 1, 3),
                     Separator = new LiveCharts.Wpf.Separator

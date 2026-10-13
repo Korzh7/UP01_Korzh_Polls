@@ -172,7 +172,7 @@
                                                    FontSize="12" 
                                                    FontWeight="SemiBold"
                                                    HorizontalAlignment="Center"
-                                                   Foreground="{DynamicResource PrimaryColor}"/>
+                                                   Foreground="{DynamicResource PrimaryDarkColor}"/>
 
                                         <!-- Email / Логин -->
                                         <TextBlock Grid.Row="3" 

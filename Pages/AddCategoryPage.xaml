@@ -26,7 +26,7 @@
 
                 <Label Content="Название категории:*" Margin="0,0,0,4"/>
                 <TextBox x:Name="TBCategoryName" 
-                         Text="{Binding Name}" 
+                         Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                          ToolTip="Введите наименование категории опросов" 
                          Margin="0,0,0,25"/>
 

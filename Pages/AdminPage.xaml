@@ -82,9 +82,9 @@
                 <Button Content="Режим просмотра каталога (как пользователь)"
                         ToolTip="Перейти к списку пользователей с фильтрацией"
                         Background="Transparent"
-                        Foreground="{DynamicResource PrimaryColor}"
+                        Foreground="{DynamicResource PrimaryDarkColor}"
                         BorderThickness="1"
-                        BorderBrush="{DynamicResource PrimaryColor}"
+                        BorderBrush="{DynamicResource PrimaryDarkColor}"
                         Height="36"
                         Margin="8,0"
                         Click="BtnUserView_Click"/>
