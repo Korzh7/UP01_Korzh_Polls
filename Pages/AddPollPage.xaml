@@ -25,13 +25,13 @@
 
                                 <Label Content="Название опроса:*" Margin="0,0,0,2"/>
                 <TextBox x:Name="TBPollTitle" 
-                         Text="{Binding Title}" 
+                         Text="{Binding Title, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                          ToolTip="Введите заголовок опроса или голосования" 
                          Margin="0,0,0,10"/>
 
                                 <Label Content="Описание (необязательно):" Margin="0,0,0,2"/>
                 <TextBox x:Name="TBPollDesc" 
-                         Text="{Binding Description}" 
+                         Text="{Binding Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                          ToolTip="Введите пояснение или контекст опроса" 
                          Height="60" 
                          TextWrapping="Wrap" 
@@ -41,7 +41,7 @@
                                 <Label Content="Создатель (Пользователь):*" Margin="0,0,0,2"/>
                 <ComboBox x:Name="CBUser" 
                           SelectedValuePath="Id" 
-                          SelectedValue="{Binding Path=UserId}" 
+                          SelectedValue="{Binding Path=UserId, Mode=TwoWay}" 
                           DisplayMemberPath="FullName" 
                           ToolTip="Выберите создателя опроса"
                           Margin="0,0,0,10"/>
@@ -49,7 +49,7 @@
                                 <Label Content="Тематическая категория:*" Margin="0,0,0,2"/>
                 <ComboBox x:Name="CBCategory" 
                           SelectedValuePath="Id" 
-                          SelectedValue="{Binding Path=CategoryId}" 
+                          SelectedValue="{Binding Path=CategoryId, Mode=TwoWay}" 
                           DisplayMemberPath="Name" 
                           ToolTip="Выберите тематическую категорию"
                           Margin="0,0,0,10"/>
