@@ -22,11 +22,22 @@
             <WrapPanel Orientation="Horizontal" VerticalAlignment="Center">
                 
                 <!-- Шаг 12. Пункт 6: Выбор пользователя с DisplayMemberPath="FullName" -->
-                <TextBlock Text="Пользователь (автор):" VerticalAlignment="Center" Margin="5,0"/>
+                <TextBlock Text="Пользователь:" VerticalAlignment="Center" Margin="5,0"/>
                 <ComboBox x:Name="CmbUser" DisplayMemberPath="FullName" 
-                          Width="260" Height="32" Margin="5,0,15,0"
+                          Width="220" Height="32" Margin="5,0,15,0"
                           ToolTip="Выберите пользователя для построения отчета и графика"
                           SelectionChanged="UpdateChart"/>
+
+                <!-- Выбор среза активности (Создано / Участие / Сводка) -->
+                <TextBlock Text="Активность:" VerticalAlignment="Center" Margin="5,0"/>
+                <ComboBox x:Name="CmbActivity" 
+                          Width="210" Height="32" Margin="5,0,15,0"
+                          ToolTip="Выберите срез активности: создание опросов, участие в опросах или всё вместе"
+                          SelectionChanged="UpdateChart">
+                    <ComboBoxItem Content="Сводка (Создано и Участие)" IsSelected="True"/>
+                    <ComboBoxItem Content="Только созданные опросы (автор)"/>
+                    <ComboBoxItem Content="Только участие в опросах"/>
+                </ComboBox>
 
                 <!-- Шаг 12. Пункт 5: Выбор типа диаграммы -->
                 <TextBlock Text="Тип диаграммы:" VerticalAlignment="Center" Margin="5,0"/>
@@ -43,14 +54,14 @@
                 <Button x:Name="BtnExportExcel" 
                         Content="Экспорт в Excel (.xlsx)" 
                         ToolTip="Выгрузить структурированный отчет в Microsoft Excel" 
-                        Height="32" MinWidth="150" Margin="5,0"
+                        Height="32" MinWidth="140" Margin="5,4"
                         Click="BtnExportExcel_Click"/>
 
                 <!-- Шаг 13: Экспорт в Word -->
                 <Button x:Name="BtnExportWord" 
                         Content="Экспорт в Word (.docx)" 
                         ToolTip="Сформировать аналитическую записку в Microsoft Word" 
-                        Height="32" MinWidth="150" Margin="5,0"
+                        Height="32" MinWidth="140" Margin="5,4"
                         Click="BtnExportWord_Click"/>
             </WrapPanel>
         </Border>
@@ -69,7 +80,7 @@
                         <lvc:Axis x:Name="AxisX" Title="Тематические категории опросов" Foreground="{DynamicResource TextColor}"/>
                     </lvc:CartesianChart.AxisX>
                     <lvc:CartesianChart.AxisY>
-                        <lvc:Axis x:Name="AxisY" Title="Количество созданных опросов" Foreground="{DynamicResource TextColor}"/>
+                        <lvc:Axis x:Name="AxisY" Title="Количество опросов" Foreground="{DynamicResource TextColor}"/>
                     </lvc:CartesianChart.AxisY>
                 </lvc:CartesianChart>
 
