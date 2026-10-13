@@ -45,12 +45,19 @@
                               AutoGenerateColumns="False" 
                               IsReadOnly="True"
                               SelectionMode="Single">
+                        <DataGrid.Resources>
+                            <Style x:Key="WrapTextColumnStyle" TargetType="TextBlock">
+                                <Setter Property="TextWrapping" Value="Wrap"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="Padding" Value="4,2"/>
+                            </Style>
+                        </DataGrid.Resources>
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="№" Binding="{Binding Id}" Width="50"/>
-                            <DataGridTextColumn Header="Название опроса" Binding="{Binding Title}" Width="280"/>
-                            <DataGridTextColumn Header="Категория" Binding="{Binding Category.Name}" Width="200"/>
-                            <DataGridTextColumn Header="Создатель опроса" Binding="{Binding User.FullName}" Width="200"/>
-                            <DataGridTextColumn Header="Дата создания" Binding="{Binding CreatedAt, StringFormat='dd.MM.yyyy'}" Width="110"/>
+                            <DataGridTextColumn Header="Название опроса" Binding="{Binding Title}" Width="2*" ElementStyle="{StaticResource WrapTextColumnStyle}"/>
+                            <DataGridTextColumn Header="Категория" Binding="{Binding Category.Name}" Width="1.4*" ElementStyle="{StaticResource WrapTextColumnStyle}"/>
+                            <DataGridTextColumn Header="Создатель опроса" Binding="{Binding User.FullName}" Width="1.4*" ElementStyle="{StaticResource WrapTextColumnStyle}"/>
+                            <DataGridTextColumn Header="Дата создания" Binding="{Binding CreatedAt, StringFormat='dd.MM.yyyy'}" Width="120"/>
                             <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="100"/>
                         </DataGrid.Columns>
                     </DataGrid>

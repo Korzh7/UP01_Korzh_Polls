@@ -17,16 +17,23 @@
                   AutoGenerateColumns="False" 
                   IsReadOnly="True"
                   SelectionMode="Extended">
+            <DataGrid.Resources>
+                <Style x:Key="WrapTextColumnStyle" TargetType="TextBlock">
+                    <Setter Property="TextWrapping" Value="Wrap"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="Padding" Value="4,2"/>
+                </Style>
+            </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
-                <DataGridTextColumn Header="Дата создания" Binding="{Binding CreatedAt, StringFormat='dd.MM.yyyy HH:mm'}" Width="130"/>
-                <DataGridTextColumn Header="Автор" Binding="{Binding User.FullName}" Width="160"/>
-                <DataGridTextColumn Header="Категория" Binding="{Binding Category.Name}" Width="160"/>
-                <DataGridTextColumn Header="Название опроса" Binding="{Binding Title}" Width="220"/>
-                <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="100"/>
-                <DataGridTextColumn Header="Анонимный" Binding="{Binding IsAnonymous}" Width="90"/>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="45"/>
+                <DataGridTextColumn Header="Дата создания" Binding="{Binding CreatedAt, StringFormat='dd.MM.yyyy HH:mm'}" Width="125"/>
+                <DataGridTextColumn Header="Автор" Binding="{Binding User.FullName}" Width="1.3*" ElementStyle="{StaticResource WrapTextColumnStyle}"/>
+                <DataGridTextColumn Header="Категория" Binding="{Binding Category.Name}" Width="1.3*" ElementStyle="{StaticResource WrapTextColumnStyle}"/>
+                <DataGridTextColumn Header="Название опроса" Binding="{Binding Title}" Width="2*" ElementStyle="{StaticResource WrapTextColumnStyle}"/>
+                <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="90"/>
+                <DataGridTextColumn Header="Анонимный" Binding="{Binding IsAnonymous}" Width="85"/>
 
-                <DataGridTemplateColumn Header="Действия" Width="*">
+                <DataGridTemplateColumn Header="Действия" Width="130">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button x:Name="ButtonEdit" 

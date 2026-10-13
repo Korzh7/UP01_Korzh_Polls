@@ -7,7 +7,8 @@
       d:DesignHeight="550" d:DesignWidth="850"
       Title="Авторизация">
 
-    <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+    <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20">
         <Border Background="{DynamicResource SurfaceColor}" 
                 BorderBrush="{DynamicResource BorderBrushColor}" 
                 BorderThickness="1" 
@@ -139,4 +140,5 @@
             </StackPanel>
         </Border>
     </Grid>
+</ScrollViewer>
 </Page>
