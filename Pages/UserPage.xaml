@@ -47,7 +47,8 @@
                     <DataGrid Grid.Row="1" x:Name="DataGridPollsForUser"
                               AutoGenerateColumns="False" 
                               IsReadOnly="True"
-                              SelectionMode="Single">
+                              SelectionMode="Single"
+                              ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle}">
                         <DataGrid.Resources>
                             <Style x:Key="WrapTextColumnStyle" TargetType="TextBlock">
                                 <Setter Property="TextWrapping" Value="Wrap"/>

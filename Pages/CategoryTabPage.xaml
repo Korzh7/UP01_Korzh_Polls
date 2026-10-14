@@ -17,7 +17,8 @@
         <DataGrid Grid.Row="0" x:Name="DataGridCategory" 
                   AutoGenerateColumns="False" 
                   IsReadOnly="True"
-                  SelectionMode="Extended">
+                  SelectionMode="Extended"
+                  ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle}">
             <DataGrid.Resources>
                 <Style x:Key="WrapTextColumnStyle" TargetType="TextBlock">
                     <Setter Property="TextWrapping" Value="Wrap"/>
