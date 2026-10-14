@@ -29,13 +29,14 @@
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60"/>
                 <DataGridTextColumn Header="Название категории" Binding="{Binding Name}" Width="*" ElementStyle="{StaticResource WrapTextColumnStyle}"/>
 
-                <DataGridTemplateColumn Header="Действия" Width="140">
+                <DataGridTemplateColumn Header="Действия" Width="155">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button x:Name="ButtonEdit" 
                                     Content="Редактировать" 
                                     ToolTip="Изменить название категории" 
-                                    Height="28" MinWidth="110" Margin="2"
+                                    Height="28" MinWidth="120" Padding="6,2" FontSize="12" Margin="2"
+                                    HorizontalAlignment="Center"
                                     Click="ButtonEdit_Click"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

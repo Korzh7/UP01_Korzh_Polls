@@ -34,13 +34,14 @@
                 <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="90"/>
                 <DataGridTextColumn Header="Анонимный" Binding="{Binding IsAnonymous}" Width="85"/>
 
-                <DataGridTemplateColumn Header="Действия" Width="130">
+                <DataGridTemplateColumn Header="Действия" Width="155">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button x:Name="ButtonEdit" 
                                     Content="Редактировать" 
                                     ToolTip="Редактировать параметры опроса" 
-                                    Height="28" MinWidth="110" Margin="2"
+                                    Height="28" MinWidth="120" Padding="6,2" FontSize="12" Margin="2"
+                                    HorizontalAlignment="Center"
                                     Click="ButtonEdit_Click"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
