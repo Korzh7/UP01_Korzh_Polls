@@ -322,15 +322,7 @@
     </Style>
 
     <!-- Стиль заголовков колонок DataGrid (DataGridColumnHeader) -->
-    <Style TargetType="DataGridColumnHeader">
-        <Style.Resources>
-            <Style TargetType="TextBlock">
-                <Setter Property="Foreground" Value="{DynamicResource DataGridHeaderForeground}"/>
-                <Setter Property="FontWeight" Value="SemiBold"/>
-                <Setter Property="FontSize" Value="13"/>
-                <Setter Property="FontFamily" Value="{StaticResource AppFontFamily}"/>
-            </Style>
-        </Style.Resources>
+    <Style x:Key="DataGridColumnHeaderStyle" TargetType="DataGridColumnHeader">
         <Setter Property="Background" Value="{DynamicResource DataGridHeaderBackground}" />
         <Setter Property="Foreground" Value="{DynamicResource DataGridHeaderForeground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushColor}" />
@@ -344,30 +336,30 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="DataGridColumnHeader">
-                    <ControlTemplate.Resources>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="Foreground" Value="{DynamicResource DataGridHeaderForeground}"/>
-                            <Setter Property="FontWeight" Value="SemiBold"/>
-                            <Setter Property="FontSize" Value="13"/>
-                            <Setter Property="FontFamily" Value="{StaticResource AppFontFamily}"/>
-                        </Style>
-                    </ControlTemplate.Resources>
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             Padding="{TemplateBinding Padding}">
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          RecognizesAccessKey="True"
-                                          TextElement.Foreground="{DynamicResource DataGridHeaderForeground}"
-                                          TextElement.FontWeight="{TemplateBinding FontWeight}"
-                                          TextElement.FontSize="{TemplateBinding FontSize}"
-                                          TextElement.FontFamily="{TemplateBinding FontFamily}"/>
+                                          RecognizesAccessKey="True">
+                            <ContentPresenter.ContentTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" 
+                                               Foreground="{DynamicResource DataGridHeaderForeground}" 
+                                               FontWeight="SemiBold" 
+                                               FontSize="13" 
+                                               FontFamily="{StaticResource AppFontFamily}"/>
+                                </DataTemplate>
+                            </ContentPresenter.ContentTemplate>
+                        </ContentPresenter>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource DataGridColumnHeaderStyle}" />
 
     <!-- Стиль ячеек DataGrid (DataGridCell) -->
     <Style TargetType="DataGridCell">
@@ -416,6 +408,7 @@
 
     <!-- Общий стиль DataGrid -->
     <Style TargetType="DataGrid">
+        <Setter Property="ColumnHeaderStyle" Value="{StaticResource DataGridColumnHeaderStyle}" />
         <Setter Property="Background" Value="{DynamicResource SurfaceColor}" />
         <Setter Property="RowBackground" Value="{DynamicResource DataGridRowBackground}" />
         <Setter Property="AlternatingRowBackground" Value="{DynamicResource DataGridAlternatingRowBackground}" />
