@@ -323,6 +323,14 @@
 
     <!-- Стиль заголовков колонок DataGrid (DataGridColumnHeader) -->
     <Style TargetType="DataGridColumnHeader">
+        <Style.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="Foreground" Value="{DynamicResource DataGridHeaderForeground}"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="FontSize" Value="13"/>
+                <Setter Property="FontFamily" Value="{StaticResource AppFontFamily}"/>
+            </Style>
+        </Style.Resources>
         <Setter Property="Background" Value="{DynamicResource DataGridHeaderBackground}" />
         <Setter Property="Foreground" Value="{DynamicResource DataGridHeaderForeground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushColor}" />
@@ -336,6 +344,14 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="DataGridColumnHeader">
+                    <ControlTemplate.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Foreground" Value="{DynamicResource DataGridHeaderForeground}"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                            <Setter Property="FontSize" Value="13"/>
+                            <Setter Property="FontFamily" Value="{StaticResource AppFontFamily}"/>
+                        </Style>
+                    </ControlTemplate.Resources>
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
@@ -343,7 +359,7 @@
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                           RecognizesAccessKey="True"
-                                          TextElement.Foreground="{TemplateBinding Foreground}"
+                                          TextElement.Foreground="{DynamicResource DataGridHeaderForeground}"
                                           TextElement.FontWeight="{TemplateBinding FontWeight}"
                                           TextElement.FontSize="{TemplateBinding FontSize}"
                                           TextElement.FontFamily="{TemplateBinding FontFamily}"/>

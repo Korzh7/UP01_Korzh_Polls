@@ -24,14 +24,14 @@
                 <!-- Шаг 12. Пункт 6: Выбор пользователя с DisplayMemberPath="FullName" -->
                 <TextBlock Text="Пользователь:" VerticalAlignment="Center" Margin="5,0"/>
                 <ComboBox x:Name="CmbUser" DisplayMemberPath="FullName" 
-                          Width="220" Height="32" Margin="5,0,15,0"
+                          Width="230" Height="32" Margin="5,0,15,0"
                           ToolTip="Выберите пользователя для построения отчета и графика"
                           SelectionChanged="UpdateChart"/>
 
                 <!-- Выбор среза активности (Создано / Участие / Сводка) -->
                 <TextBlock Text="Активность:" VerticalAlignment="Center" Margin="5,0"/>
                 <ComboBox x:Name="CmbActivity" 
-                          Width="210" Height="32" Margin="5,0,15,0"
+                          Width="220" Height="32" Margin="5,0,15,0"
                           ToolTip="Выберите срез активности: создание опросов, участие в опросах или всё вместе"
                           SelectionChanged="UpdateChart">
                     <ComboBoxItem Content="Сводка (Создано и Участие)" IsSelected="True"/>
@@ -42,7 +42,7 @@
                 <!-- Шаг 12. Пункт 5: Выбор типа диаграммы -->
                 <TextBlock Text="Тип диаграммы:" VerticalAlignment="Center" Margin="5,0"/>
                 <ComboBox x:Name="CmbDiagram" 
-                          Width="160" Height="32" Margin="5,0,15,0"
+                          Width="210" Height="32" Margin="5,0,15,0"
                           ToolTip="Выберите вид графического отображения"
                           SelectionChanged="UpdateChart">
                     <ComboBoxItem Content="Столбчатая (Column)" IsSelected="True"/>

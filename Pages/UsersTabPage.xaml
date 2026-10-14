@@ -33,13 +33,14 @@
                 <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="1.4*" ElementStyle="{StaticResource WrapTextColumnStyle}"/>
                 <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" Width="125"/>
                 
-                <DataGridTemplateColumn Header="Действия" Width="130">
+                <DataGridTemplateColumn Header="Действия" Width="155">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button x:Name="ButtonEdit" 
                                     Content="Редактировать" 
                                     ToolTip="Редактировать данные пользователя" 
-                                    Height="28" MinWidth="110" Margin="2"
+                                    Height="28" MinWidth="120" Padding="6,2" FontSize="12" Margin="2"
+                                    HorizontalAlignment="Center"
                                     Click="ButtonEdit_Click"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
