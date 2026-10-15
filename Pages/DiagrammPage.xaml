@@ -63,6 +63,13 @@
                         ToolTip="Сформировать аналитическую записку в Microsoft Word" 
                         Height="32" MinWidth="140" Margin="5,4"
                         Click="BtnExportWord_Click"/>
+
+                <!-- Экспорт в PDF -->
+                <Button x:Name="BtnExportPdf" 
+                        Content="Экспорт в PDF (.pdf)" 
+                        ToolTip="Сформировать аналитический отчет в формате PDF" 
+                        Height="32" MinWidth="140" Margin="5,4"
+                        Click="BtnExportPdf_Click"/>
             </WrapPanel>
         </Border>
 

@@ -12,6 +12,9 @@ using DocumentFormat.OpenXml.Wordprocessing;
 using LiveCharts;
 using LiveCharts.Wpf;
 using Microsoft.EntityFrameworkCore;
+using PdfSharpCore.Drawing;
+using PdfSharpCore.Fonts;
+using PdfSharpCore.Pdf;
 using UP01_Korzh_Polls.Models;
 
 namespace UP01_Korzh_Polls.Pages;
@@ -637,4 +640,256 @@ public partial class DiagrammPage : System.Windows.Controls.Page
             MessageBox.Show($"Ошибка при экспорте в Excel: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
+
+    // Экспорт аналитического отчета в PDF (.pdf) через PdfSharpCore
+    private void BtnExportPdf_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            if (GlobalFontSettings.FontResolver == null)
+            {
+                GlobalFontSettings.FontResolver = new FileFontResolver();
+            }
+
+            using var db = new PollsDbContext();
+            var allUsers = db.UserAccounts
+                .Include(u => u.Polls).ThenInclude(p => p.Category)
+                .Include(u => u.Responses).ThenInclude(r => r.Poll).ThenInclude(p => p.Category)
+                .OrderBy(u => u.FullName)
+                .ToList();
+            var allCategories = db.Categories.OrderBy(c => c.Name).ToList();
+
+            string exportDir = AppDomain.CurrentDomain.BaseDirectory;
+            string filePath = System.IO.Path.Combine(exportDir, "Polls_Report.pdf");
+
+            using (var doc = new PdfDocument())
+            {
+                doc.Info.Title = "Аналитический отчет по опросам и голосованиям";
+                doc.Info.Author = "Корж С.А.";
+                doc.Info.Subject = "Сводная аналитика активности пользователей платформы";
+
+                var page = doc.AddPage();
+                page.Size = PdfSharpCore.PageSize.A4;
+                page.Orientation = PdfSharpCore.PageOrientation.Portrait;
+
+                var gfx = XGraphics.FromPdfPage(page);
+
+                var titleFont = new XFont("Arial", 13, XFontStyle.Bold);
+                var subtitleFont = new XFont("Arial", 9, XFontStyle.Regular);
+                var sectionFont = new XFont("Arial", 10.5, XFontStyle.Bold);
+                var thFont = new XFont("Arial", 8.5, XFontStyle.Bold);
+                var cellFont = new XFont("Arial", 8.5, XFontStyle.Regular);
+                var cellBoldFont = new XFont("Arial", 8.5, XFontStyle.Bold);
+                var footerFont = new XFont("Arial", 7.5, XFontStyle.Italic);
+
+                var primaryColor = XColor.FromArgb(35, 62, 118);
+                var secondaryColor = XColor.FromArgb(1, 152, 175);
+                var textColor = XColor.FromArgb(34, 34, 34);
+                var headerBgColor = XColor.FromArgb(235, 240, 248);
+                var totalBgColor = XColor.FromArgb(245, 247, 250);
+                var borderColor = XColor.FromArgb(210, 215, 222);
+
+                var primaryBrush = new XSolidBrush(primaryColor);
+                var textBrush = new XSolidBrush(textColor);
+                var borderPen = new XPen(borderColor, 0.5);
+                var headerPen = new XPen(primaryColor, 1);
+
+                double margin = 36;
+                double contentWidth = page.Width - 2 * margin;
+                double y = margin;
+
+                void CheckNewPage(double neededHeight)
+                {
+                    if (y + neededHeight > page.Height - 40)
+                    {
+                        gfx.DrawString($"Стр. {doc.PageCount} | Отчет сформирован автоматически в ИС «Платформа опросов и голосований»",
+                            footerFont, XBrushes.Gray, new XRect(margin, page.Height - 30, contentWidth, 15), XStringFormats.Center);
+
+                        gfx.Dispose();
+                        page = doc.AddPage();
+                        page.Size = PdfSharpCore.PageSize.A4;
+                        page.Orientation = PdfSharpCore.PageOrientation.Portrait;
+                        gfx = XGraphics.FromPdfPage(page);
+                        y = margin;
+                    }
+                }
+
+                // Шапка документа
+                gfx.DrawRectangle(new XSolidBrush(primaryColor), margin, y, contentWidth, 4);
+                y += 12;
+
+                gfx.DrawString("ПЛАТФОРМА ПО ПРОВЕДЕНИЮ ОПРОСОВ И ГОЛОСОВАНИЙ", titleFont, primaryBrush, margin, y);
+                y += 18;
+
+                gfx.DrawString($"Сводный аналитический отчет об активности пользователей | Дата: {DateTime.Now:dd.MM.yyyy HH:mm}", subtitleFont, XBrushes.DarkSlateGray, margin, y);
+                y += 14;
+
+                gfx.DrawLine(new XPen(secondaryColor, 1), margin, y, margin + contentWidth, y);
+                y += 16;
+
+                // Раздел 1: Сводная таблица по всем пользователям
+                gfx.DrawString("1. Сводная статистика активности пользователей платформы", sectionFont, primaryBrush, margin, y);
+                y += 14;
+
+                double[] colWidths = { 170, 95, 80, 58, 60, 60 };
+                string[] colHeaders = { "Пользователь (ФИО)", "Логин", "Роль", "Создано", "Участие", "Всего" };
+
+                double rowHeight = 20;
+                gfx.DrawRectangle(new XSolidBrush(headerBgColor), margin, y, contentWidth, rowHeight);
+                gfx.DrawRectangle(headerPen, margin, y, contentWidth, rowHeight);
+
+                double curX = margin;
+                for (int i = 0; i < colWidths.Length; i++)
+                {
+                    var format = (i >= 3) ? XStringFormats.Center : XStringFormats.CenterLeft;
+                    double padLeft = (i < 3) ? 5 : 0;
+                    gfx.DrawString(colHeaders[i], thFont, primaryBrush, new XRect(curX + padLeft, y, colWidths[i] - padLeft, rowHeight), format);
+                    if (i > 0)
+                    {
+                        gfx.DrawLine(borderPen, curX, y, curX, y + rowHeight);
+                    }
+                    curX += colWidths[i];
+                }
+                y += rowHeight;
+
+                int grandTotalCreated = 0;
+                int grandTotalParticipated = 0;
+
+                bool isAlternate = false;
+                foreach (var u in allUsers)
+                {
+                    CheckNewPage(rowHeight);
+
+                    int created = u.Polls.Count;
+                    int part = u.Responses.Select(r => r.PollId).Distinct().Count();
+                    int total = created + part;
+
+                    grandTotalCreated += created;
+                    grandTotalParticipated += part;
+
+                    if (isAlternate)
+                    {
+                        gfx.DrawRectangle(new XSolidBrush(XColor.FromArgb(249, 250, 252)), margin, y, contentWidth, rowHeight);
+                    }
+                    gfx.DrawRectangle(borderPen, margin, y, contentWidth, rowHeight);
+
+                    string[] rowValues = {
+                        u.FullName,
+                        u.Login,
+                        u.Role,
+                        created.ToString(),
+                        part.ToString(),
+                        total.ToString()
+                    };
+
+                    curX = margin;
+                    for (int i = 0; i < colWidths.Length; i++)
+                    {
+                        var format = (i >= 3) ? XStringFormats.Center : XStringFormats.CenterLeft;
+                        double padLeft = (i < 3) ? 5 : 0;
+                        var font = (i == 5) ? cellBoldFont : cellFont;
+                        gfx.DrawString(rowValues[i], font, textBrush, new XRect(curX + padLeft, y, colWidths[i] - padLeft, rowHeight), format);
+                        if (i > 0)
+                        {
+                            gfx.DrawLine(borderPen, curX, y, curX, y + rowHeight);
+                        }
+                        curX += colWidths[i];
+                    }
+
+                    y += rowHeight;
+                    isAlternate = !isAlternate;
+                }
+
+                // Итог по пользователям
+                CheckNewPage(rowHeight);
+                gfx.DrawRectangle(new XSolidBrush(totalBgColor), margin, y, contentWidth, rowHeight);
+                gfx.DrawRectangle(headerPen, margin, y, contentWidth, rowHeight);
+
+                double totalLabelWidth = colWidths[0] + colWidths[1] + colWidths[2];
+                gfx.DrawString("ИТОГО ПО ВСЕМ ПОЛЬЗОВАТЕЛЯМ:", cellBoldFont, primaryBrush, new XRect(margin + 5, y, totalLabelWidth - 10, rowHeight), XStringFormats.CenterLeft);
+
+                curX = margin + totalLabelWidth;
+                gfx.DrawLine(borderPen, curX, y, curX, y + rowHeight);
+                gfx.DrawString(grandTotalCreated.ToString(), cellBoldFont, primaryBrush, new XRect(curX, y, colWidths[3], rowHeight), XStringFormats.Center);
+
+                curX += colWidths[3];
+                gfx.DrawLine(borderPen, curX, y, curX, y + rowHeight);
+                gfx.DrawString(grandTotalParticipated.ToString(), cellBoldFont, primaryBrush, new XRect(curX, y, colWidths[4], rowHeight), XStringFormats.Center);
+
+                curX += colWidths[4];
+                gfx.DrawLine(borderPen, curX, y, curX, y + rowHeight);
+                gfx.DrawString((grandTotalCreated + grandTotalParticipated).ToString(), cellBoldFont, new XSolidBrush(XColor.FromArgb(180, 40, 40)), new XRect(curX, y, colWidths[5], rowHeight), XStringFormats.Center);
+
+                y += rowHeight + 20;
+
+                // Раздел 2: Сводная активность по категориям
+                CheckNewPage(80);
+                gfx.DrawString("2. Распределение опросов по тематическим категориям", sectionFont, primaryBrush, margin, y);
+                y += 14;
+
+                double[] catColWidths = { 243, 140, 140 };
+                string[] catHeaders = { "Тематическая категория", "Опросов создано", "Участий зафиксировано" };
+
+                gfx.DrawRectangle(new XSolidBrush(headerBgColor), margin, y, contentWidth, rowHeight);
+                gfx.DrawRectangle(headerPen, margin, y, contentWidth, rowHeight);
+
+                curX = margin;
+                for (int i = 0; i < catColWidths.Length; i++)
+                {
+                    var format = (i == 0) ? XStringFormats.CenterLeft : XStringFormats.Center;
+                    double padLeft = (i == 0) ? 5 : 0;
+                    gfx.DrawString(catHeaders[i], thFont, primaryBrush, new XRect(curX + padLeft, y, catColWidths[i] - padLeft, rowHeight), format);
+                    if (i > 0)
+                    {
+                        gfx.DrawLine(borderPen, curX, y, curX, y + rowHeight);
+                    }
+                    curX += catColWidths[i];
+                }
+                y += rowHeight;
+
+                isAlternate = false;
+                foreach (var cat in allCategories)
+                {
+                    CheckNewPage(rowHeight);
+
+                    int catCreated = db.Polls.Count(p => p.CategoryId == cat.Id);
+                    int catPart = db.Responses.Where(r => r.Poll != null && r.Poll.CategoryId == cat.Id).Select(r => r.PollId).Distinct().Count();
+
+                    if (isAlternate)
+                    {
+                        gfx.DrawRectangle(new XSolidBrush(XColor.FromArgb(249, 250, 252)), margin, y, contentWidth, rowHeight);
+                    }
+                    gfx.DrawRectangle(borderPen, margin, y, contentWidth, rowHeight);
+
+                    curX = margin;
+                    gfx.DrawString(cat.Name, cellFont, textBrush, new XRect(curX + 5, y, catColWidths[0] - 5, rowHeight), XStringFormats.CenterLeft);
+                    curX += catColWidths[0];
+                    gfx.DrawLine(borderPen, curX, y, curX, y + rowHeight);
+
+                    gfx.DrawString(catCreated.ToString(), cellFont, textBrush, new XRect(curX, y, catColWidths[1], rowHeight), XStringFormats.Center);
+                    curX += catColWidths[1];
+                    gfx.DrawLine(borderPen, curX, y, curX, y + rowHeight);
+
+                    gfx.DrawString(catPart.ToString(), cellFont, textBrush, new XRect(curX, y, catColWidths[2], rowHeight), XStringFormats.Center);
+
+                    y += rowHeight;
+                    isAlternate = !isAlternate;
+                }
+
+                gfx.DrawString($"Стр. {doc.PageCount} | Отчет сформирован автоматически в ИС «Платформа опросов и голосований»",
+                    footerFont, XBrushes.Gray, new XRect(margin, page.Height - 30, contentWidth, 15), XStringFormats.Center);
+
+                gfx.Dispose();
+                doc.Save(filePath);
+            }
+
+            MessageBox.Show($"Аналитический отчет PDF успешно сформирован:\n{filePath}", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+            Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true });
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Ошибка при экспорте в PDF: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
 }
+
