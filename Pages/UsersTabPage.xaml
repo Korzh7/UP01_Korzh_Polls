@@ -31,7 +31,7 @@
                 <DataGridTextColumn Header="Роль" Binding="{Binding Role}" Width="85"/>
                 <DataGridTextColumn Header="ФИО" Binding="{Binding FullName}" Width="1.8*" ElementStyle="{StaticResource WrapTextColumnStyle}"/>
                 <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="1.4*" ElementStyle="{StaticResource WrapTextColumnStyle}"/>
-                <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" Width="125"/>
+                <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" Width="165" ElementStyle="{StaticResource WrapTextColumnStyle}"/>
                 
                 <DataGridTemplateColumn Header="Действия" Width="155">
                     <DataGridTemplateColumn.CellTemplate>

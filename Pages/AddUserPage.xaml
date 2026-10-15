@@ -7,13 +7,14 @@
       d:DesignHeight="600" d:DesignWidth="850"
       Title="Данные пользователя">
 
-        <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+    <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20">
         <Border Background="{DynamicResource SurfaceColor}" 
                 BorderBrush="{DynamicResource BorderBrushColor}" 
                 BorderThickness="1" 
                 CornerRadius="8" 
                 Padding="35,25" 
-                Width="550">
+                Width="580">
             <StackPanel>
                 <TextBlock x:Name="HeaderTextBlock"
                            Text="ДОБАВЛЕНИЕ ПОЛЬЗОВАТЕЛЯ" 
@@ -109,4 +110,5 @@
             </StackPanel>
         </Border>
     </Grid>
+</ScrollViewer>
 </Page>
