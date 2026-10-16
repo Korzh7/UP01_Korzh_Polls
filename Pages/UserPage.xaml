@@ -167,8 +167,11 @@
                                                 <Image.Source>
                                                     <Binding Path="Photo">
                                                         <Binding.TargetNullValue>
-                                                            <BitmapImage UriSource="/res/default_avatar.png"/>
+                                                            <BitmapImage UriSource="/res/app_logo.png"/>
                                                         </Binding.TargetNullValue>
+                                                        <Binding.FallbackValue>
+                                                            <BitmapImage UriSource="/res/app_logo.png"/>
+                                                        </Binding.FallbackValue>
                                                     </Binding>
                                                 </Image.Source>
                                             </Image>

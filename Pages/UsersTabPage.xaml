@@ -16,6 +16,7 @@
 
         <DataGrid Grid.Row="0" x:Name="DataGridUser" 
                   AutoGenerateColumns="False" 
+                  CanUserResizeColumns="True"
                   IsReadOnly="True"
                   SelectionMode="Extended"
                   ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle}">
@@ -24,15 +25,16 @@
                     <Setter Property="TextWrapping" Value="Wrap"/>
                     <Setter Property="VerticalAlignment" Value="Center"/>
                     <Setter Property="Padding" Value="4,2"/>
+                    <Setter Property="ToolTip" Value="{Binding Text, RelativeSource={RelativeSource Self}}"/>
                 </Style>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="45"/>
-                <DataGridTextColumn Header="Логин" Binding="{Binding Login}" Width="110"/>
-                <DataGridTextColumn Header="Роль" Binding="{Binding Role}" Width="85"/>
-                <DataGridTextColumn Header="ФИО" Binding="{Binding FullName}" Width="1.8*" ElementStyle="{StaticResource WrapTextColumnStyle}"/>
-                <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="1.4*" ElementStyle="{StaticResource WrapTextColumnStyle}"/>
-                <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" Width="165" ElementStyle="{StaticResource WrapTextColumnStyle}"/>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="45" CanUserResize="False"/>
+                <DataGridTextColumn Header="Логин" Binding="{Binding Login}" Width="110" MinWidth="70"/>
+                <DataGridTextColumn Header="Роль" Binding="{Binding Role}" Width="85" MinWidth="60"/>
+                <DataGridTextColumn Header="ФИО" Binding="{Binding FullName}" Width="1.8*" MinWidth="130" ElementStyle="{StaticResource WrapTextColumnStyle}"/>
+                <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="1.4*" MinWidth="120" ElementStyle="{StaticResource WrapTextColumnStyle}"/>
+                <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" Width="165" MinWidth="110" ElementStyle="{StaticResource WrapTextColumnStyle}"/>
                 
                 <DataGridTemplateColumn Header="Действия" Width="155">
                     <DataGridTemplateColumn.CellTemplate>
