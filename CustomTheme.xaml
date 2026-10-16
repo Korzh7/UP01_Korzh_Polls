@@ -18,6 +18,10 @@
     <SolidColorBrush x:Key="DataGridAlternatingRowBackground" Color="#20262E" />
     <SolidColorBrush x:Key="DataGridRowHoverBackground" Color="#374151" />
 
+        <SolidColorBrush x:Key="ToolTipBackground" Color="#20262E" />
+    <SolidColorBrush x:Key="ToolTipForeground" Color="#F8FAFC" />
+    <SolidColorBrush x:Key="ToolTipBorderBrush" Color="#64B5F6" />
+
     <FontFamily x:Key="AppFontFamily">Segoe UI, Open Sans, Arial, sans-serif</FontFamily>
 
         <Style TargetType="Button">
@@ -303,6 +307,19 @@
         </Setter>
     </Style>
 
+        <Style x:Key="ColumnHeaderGripperStyle" TargetType="Thumb">
+        <Setter Property="Width" Value="8" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Cursor" Value="SizeWE" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Thumb">
+                    <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
         <Style x:Key="DataGridColumnHeaderStyle" TargetType="DataGridColumnHeader">
         <Setter Property="Background" Value="{DynamicResource DataGridHeaderBackground}" />
         <Setter Property="Foreground" Value="{DynamicResource DataGridHeaderForeground}" />
@@ -317,24 +334,28 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="DataGridColumnHeader">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            Padding="{TemplateBinding Padding}">
-                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          RecognizesAccessKey="True">
-                            <ContentPresenter.ContentTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding}" 
-                                               Foreground="{DynamicResource DataGridHeaderForeground}" 
-                                               FontWeight="SemiBold" 
-                                               FontSize="13" 
-                                               FontFamily="{StaticResource AppFontFamily}"/>
-                                </DataTemplate>
-                            </ContentPresenter.ContentTemplate>
-                        </ContentPresenter>
-                    </Border>
+                    <Grid>
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              RecognizesAccessKey="True">
+                                <ContentPresenter.ContentTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}" 
+                                                   Foreground="{DynamicResource DataGridHeaderForeground}" 
+                                                   FontWeight="SemiBold" 
+                                                   FontSize="13" 
+                                                   FontFamily="{StaticResource AppFontFamily}"/>
+                                    </DataTemplate>
+                                </ContentPresenter.ContentTemplate>
+                            </ContentPresenter>
+                        </Border>
+                        <Thumb x:Name="PART_LeftHeaderGripper" HorizontalAlignment="Left" Style="{StaticResource ColumnHeaderGripperStyle}" />
+                        <Thumb x:Name="PART_RightHeaderGripper" HorizontalAlignment="Right" Style="{StaticResource ColumnHeaderGripperStyle}" />
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -397,6 +418,41 @@
         <Setter Property="RowHeaderWidth" Value="0" />
         <Setter Property="GridLinesVisibility" Value="Horizontal" />
         <Setter Property="FontFamily" Value="{StaticResource AppFontFamily}" />
+        <Setter Property="CanUserResizeColumns" Value="True" />
+        <Setter Property="CanUserResizeRows" Value="False" />
+    </Style>
+
+        <Style TargetType="ToolTip">
+        <Setter Property="Background" Value="{DynamicResource ToolTipBackground}" />
+        <Setter Property="Foreground" Value="{DynamicResource ToolTipForeground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ToolTipBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FontFamily" Value="{StaticResource AppFontFamily}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Padding" Value="8,5" />
+        <Setter Property="HasDropShadow" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToolTip">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4"
+                            Padding="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter TextElement.Foreground="{TemplateBinding Foreground}">
+                            <ContentPresenter.Resources>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="{Binding Path=(TextElement.Foreground), RelativeSource={RelativeSource TemplatedParent}}"/>
+                                    <Setter Property="FontSize" Value="12"/>
+                                    <Setter Property="FontFamily" Value="{StaticResource AppFontFamily}"/>
+                                </Style>
+                            </ContentPresenter.Resources>
+                        </ContentPresenter>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
 </ResourceDictionary>

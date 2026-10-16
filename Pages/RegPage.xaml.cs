@@ -128,7 +128,7 @@ public partial class RegPage : Page
                 Phone = string.IsNullOrWhiteSpace(txtbxPhone.Text) ? null : txtbxPhone.Text.Trim(),
                 Role = selectedRole,
                 PasswordHash = hashedPassword,
-                Photo = "/res/user1.png"
+                Photo = "/res/app_logo.png"
             };
 
             db.UserAccounts.Add(newUser);

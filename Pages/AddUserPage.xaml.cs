@@ -28,7 +28,7 @@ public partial class AddUserPage : Page
         else
         {
             cmbRole.SelectedIndex = 0;
-            _currentUser.Photo = "/res/user1.png";
+            _currentUser.Photo = "/res/app_logo.png";
         }
 
         DataContext = _currentUser;
@@ -42,7 +42,7 @@ public partial class AddUserPage : Page
         _currentUser.FullName = TBFio.Text?.Trim() ?? string.Empty;
         _currentUser.Email = string.IsNullOrWhiteSpace(TBEmail.Text) ? null : TBEmail.Text.Trim();
         _currentUser.Phone = string.IsNullOrWhiteSpace(TBPhone.Text) ? null : TBPhone.Text.Trim();
-        _currentUser.Photo = string.IsNullOrWhiteSpace(TBPhoto.Text) ? null : TBPhoto.Text.Trim();
+        _currentUser.Photo = string.IsNullOrWhiteSpace(TBPhoto.Text) ? "/res/app_logo.png" : TBPhoto.Text.Trim();
 
         var errors = new StringBuilder();
 
@@ -122,6 +122,6 @@ public partial class AddUserPage : Page
         _currentUser.FullName = string.Empty;
         _currentUser.Email = null;
         _currentUser.Phone = null;
-        _currentUser.Photo = null;
+        _currentUser.Photo = "/res/app_logo.png";
     }
 }
