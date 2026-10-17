@@ -8,40 +8,67 @@ using UP01_Korzh_Polls.Models;
 
 namespace UP01_Korzh_Polls.Pages;
 
+/// <summary>
+/// Страница регистрации новых пользователей системы с валидацией сложности паролей
+/// </summary>
 public partial class RegPage : Page
 {
+    /// <summary>
+    /// Конструктор страницы регистрации и установка роли по умолчанию
+    /// </summary>
     public RegPage()
     {
         InitializeComponent();
-        // По умолчанию выбрана роль "User" (Шаг 6, Пункт 3)
         comboBxRole.SelectedIndex = 0;
     }
 
-    // Обработка плейсхолдеров
+    /// <summary>
+    /// Управление видимостью подсказки для поля логина
+    /// </summary>
+    /// <param name="sender">Поле логина</param>
+    /// <param name="e">Параметры изменения текста</param>
     private void txtbxLog_TextChanged(object sender, TextChangedEventArgs e)
     {
         lblLogHitn.Visibility = string.IsNullOrEmpty(txtbxLog.Text) ? Visibility.Visible : Visibility.Hidden;
     }
 
+    /// <summary>
+    /// Управление видимостью подсказки для поля ФИО
+    /// </summary>
+    /// <param name="sender">Поле ФИО</param>
+    /// <param name="e">Параметры изменения текста</param>
     private void txtbxFIO_TextChanged(object sender, TextChangedEventArgs e)
     {
         lblFioHitn.Visibility = string.IsNullOrEmpty(txtbxFIO.Text) ? Visibility.Visible : Visibility.Hidden;
     }
 
+    /// <summary>
+    /// Управление видимостью подсказки для поля первого пароля
+    /// </summary>
+    /// <param name="sender">Поле ввода пароля</param>
+    /// <param name="e">Параметры события</param>
     private void passBxFrst_PasswordChanged(object sender, RoutedEventArgs e)
     {
         lblPassHitn.Visibility = string.IsNullOrEmpty(passBxFrst.Password) ? Visibility.Visible : Visibility.Hidden;
     }
 
+    /// <summary>
+    /// Управление видимостью подсказки для поля подтверждения пароля
+    /// </summary>
+    /// <param name="sender">Поле повторного ввода пароля</param>
+    /// <param name="e">Параметры события</param>
     private void passBxScnd_PasswordChanged(object sender, RoutedEventArgs e)
     {
         lblPassSecHitn.Visibility = string.IsNullOrEmpty(passBxScnd.Password) ? Visibility.Visible : Visibility.Hidden;
     }
 
-    // Шаг 6. Пункт 6: Обработка нажатия на кнопку «Зарегистрироваться»
+    /// <summary>
+    /// Обработка регистрации: проверка уникальности логина, валидация сложности пароля и сохранение в базу
+    /// </summary>
+    /// <param name="sender">Кнопка «Зарегистрироваться»</param>
+    /// <param name="e">Параметры события клика</param>
     private void regButton_Click(object sender, RoutedEventArgs e)
     {
-        // 6.1. Проверка заполнения полей
         if (string.IsNullOrWhiteSpace(txtbxLog.Text) || 
             string.IsNullOrWhiteSpace(txtbxFIO.Text) || 
             string.IsNullOrEmpty(passBxFrst.Password) || 
@@ -55,7 +82,6 @@ public partial class RegPage : Page
         {
             using var db = new PollsDbContext();
 
-            // 6.2. Проверка наличия в базе данных логина пользователя
             var existingUser = db.UserAccounts
                 .AsNoTracking()
                 .FirstOrDefault(u => u.Login.ToLower() == txtbxLog.Text.Trim().ToLower());
@@ -66,10 +92,6 @@ public partial class RegPage : Page
                 return;
             }
 
-            // 6.3. Проверка формата пароля согласно методичке:
-            // 1) 6 или более символов;
-            // 2) только английская раскладка;
-            // 3) хотя бы одна цифра.
             string pwd = passBxFrst.Password;
             if (pwd.Length < 6)
             {
@@ -103,7 +125,6 @@ public partial class RegPage : Page
                 return;
             }
 
-            // 6.4 (7.4 в нумерации методички): Проверка на совпадение двух паролей
             if (passBxFrst.Password != passBxScnd.Password)
             {
                 MessageBox.Show("Пароли не совпадают!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -114,10 +135,7 @@ public partial class RegPage : Page
             string trimmedFio = txtbxFIO.Text.Trim();
             string trimmedPassword = passBxFrst.Password.Trim();
 
-            // 6.5 (7.5 в нумерации методички): Создание и сохранение пользователя в БД
             string selectedRole = ((ComboBoxItem)comboBxRole.SelectedItem)?.Content?.ToString() ?? "User";
-            
-            // Хеширование пароля (Шаг 7)
             string hashedPassword = SecurityHelper.GetHash(trimmedPassword);
 
             var newUser = new UserAccount
@@ -136,7 +154,6 @@ public partial class RegPage : Page
 
             MessageBox.Show("Пользователь успешно зарегистрирован!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
 
-            // Очистка полей и переход к авторизации
             txtbxLog.Clear();
             txtbxFIO.Clear();
             txtbxEmail.Clear();

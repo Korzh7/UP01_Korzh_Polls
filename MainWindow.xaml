@@ -13,15 +13,16 @@
         Background="{DynamicResource BackgroundColor}"
         Loaded="Window_Loaded"
         Closing="Window_Closing">
-    
+
     <Grid>
-                <Grid.RowDefinitions>
+
+        <Grid.RowDefinitions>
             <RowDefinition Height="45"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="45"/>
         </Grid.RowDefinitions>
 
-                <Border Grid.Row="0" Background="{DynamicResource HeaderFooterBarColor}" Padding="10,0">
+        <Border Grid.Row="0" Background="{DynamicResource HeaderFooterBarColor}" Padding="10,0">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -29,7 +30,7 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                                <Button x:Name="ButtonBack" 
+                <Button x:Name="ButtonBack" 
                         Grid.Column="0"
                         Content="Назад" 
                         ToolTip="Вернуться на предыдущую страницу" 
@@ -37,7 +38,7 @@
                         Visibility="Hidden"
                         MinWidth="90" Height="32" Margin="0,0,10,0"/>
 
-                                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="5,0">
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="5,0">
                     <Border CornerRadius="4" ClipToBounds="True" Width="30" Height="30" Margin="0,0,10,0" Background="Transparent">
                         <Image Source="/res/app_logo.png" 
                                Stretch="Uniform" 
@@ -51,7 +52,7 @@
                                VerticalAlignment="Center"/>
                 </StackPanel>
 
-                                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
                     <TextBlock Text="Тема:" Foreground="White" VerticalAlignment="Center" Margin="0,0,10,0" FontSize="13" FontWeight="SemiBold"/>
                     <ComboBox x:Name="ThemeComboBox" 
                               Width="195" Height="32" 
@@ -64,12 +65,12 @@
             </Grid>
         </Border>
 
-                <Frame x:Name="MainFrame" 
+        <Frame x:Name="MainFrame" 
                Grid.Row="1" 
                NavigationUIVisibility="Hidden" 
                Navigated="MainFrame_Navigated"/>
 
-                <Border Grid.Row="2" Background="{DynamicResource HeaderFooterBarColor}" Padding="15,0">
+        <Border Grid.Row="2" Background="{DynamicResource HeaderFooterBarColor}" Padding="15,0">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -82,7 +83,7 @@
                            VerticalAlignment="Center" 
                            FontSize="12"/>
 
-                                <TextBlock x:Name="DateTimeNow" 
+                <TextBlock x:Name="DateTimeNow" 
                            Grid.Column="1"
                            Foreground="White" 
                            VerticalAlignment="Center" 

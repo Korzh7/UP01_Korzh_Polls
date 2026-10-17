@@ -3,8 +3,9 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:UP01_Korzh_Polls.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="550" d:DesignWidth="850"
+      d:DesignHeight="600" d:DesignWidth="900"
       Title="Авторизация">
 
 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
@@ -16,8 +17,8 @@
                 Padding="35" 
                 Width="460">
             <StackPanel HorizontalAlignment="Stretch">
-                
-                                <Border CornerRadius="8" ClipToBounds="True" Width="72" Height="72" HorizontalAlignment="Center" Margin="0,0,0,15">
+
+                <Border CornerRadius="8" ClipToBounds="True" Width="72" Height="72" HorizontalAlignment="Center" Margin="0,0,0,15">
                     <Image Source="/res/app_logo.png" Stretch="Uniform" ToolTip="Логотип платформы"/>
                 </Border>
 
@@ -34,7 +35,7 @@
                            Margin="0,0,0,25"
                            Foreground="{DynamicResource MutedTextColor}"/>
 
-                                <Label x:Name="labelLogin" Content="Логин или Email:" Margin="0,0,0,2"/>
+                <Label x:Name="labelLogin" Content="Логин или Email:" Margin="0,0,0,2"/>
                 <Grid Margin="0,0,0,14">
                     <TextBox x:Name="TextBoxLogin"
                              ToolTip="Введите ваш логин или электронную почту"
@@ -47,7 +48,7 @@
                                Margin="10,0,0,0"/>
                 </Grid>
 
-                                <Label x:Name="labelPass" Content="Пароль:" Margin="0,0,0,2"/>
+                <Label x:Name="labelPass" Content="Пароль:" Margin="0,0,0,2"/>
                 <Grid Margin="0,0,0,18">
                     <PasswordBox x:Name="PasswordBox"
                                  ToolTip="Введите пароль учетной записи"
@@ -60,15 +61,16 @@
                                Margin="10,0,0,0"/>
                 </Grid>
 
-                                <StackPanel x:Name="captchaPanel" Visibility="Collapsed" Margin="0,0,0,18">
+                <StackPanel x:Name="captchaPanel" Visibility="Collapsed" Margin="0,0,0,18">
                     <Label x:Name="labelCaptcha" Content="Код подтверждения (Капча):" FontWeight="SemiBold"/>
-                    
+
                     <Grid Margin="0,4,0,8">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                                                <TextBox x:Name="captcha" 
+
+                        <TextBox x:Name="captcha" 
                                  Grid.Column="0"
                                  CommandManager.PreviewExecuted="textBox_PreviewExecuted"
                                  ContextMenu="{x:Null}"
@@ -85,7 +87,7 @@
                                  BorderBrush="Red"
                                  BorderThickness="1.5"
                                  ToolTip="Символы капчи (копирование запрещено)"/>
-                        
+
                         <Button Grid.Column="1" 
                                 Content="Обновить" 
                                 ToolTip="Сгенерировать другую капчу" 
@@ -108,7 +110,7 @@
                             Click="submitCaptcha_Click"/>
                 </StackPanel>
 
-                                <Button x:Name="ButtonEnter"
+                <Button x:Name="ButtonEnter"
                         Content="Войти"
                         ToolTip="Авторизоваться в системе"
                         HorizontalAlignment="Stretch"

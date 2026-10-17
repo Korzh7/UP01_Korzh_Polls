@@ -8,26 +8,39 @@ using UP01_Korzh_Polls.Models;
 
 namespace UP01_Korzh_Polls.Pages;
 
+/// <summary>
+/// Страница смены пароля: проверка текущего пароля пользователя и установка нового
+/// </summary>
 public partial class ChangePassPage : Page
 {
+    /// <summary>
+    /// Конструктор по умолчанию страницы смены пароля
+    /// </summary>
     public ChangePassPage()
     {
         InitializeComponent();
     }
 
+    /// <summary>
+    /// Конструктор страницы смены пароля с предварительно установленным логином текущего пользователя
+    /// </summary>
+    /// <param name="prefilledLogin">Логин активного пользователя</param>
     public ChangePassPage(string? prefilledLogin) : this()
     {
         if (!string.IsNullOrWhiteSpace(prefilledLogin))
         {
             TbLogin.Text = prefilledLogin;
-            TbLogin.IsEnabled = false; // блокируем логин для текущего авторизованного пользователя
+            TbLogin.IsEnabled = false;
         }
     }
 
-    // Шаг 11. Пункт 2: Обработка нажатия на кнопку сохранения
+    /// <summary>
+    /// Обработка сохранения нового пароля: проверка текущего пароля, валидация формата и запись нового хеша
+    /// </summary>
+    /// <param name="sender">Кнопка «Сохранить пароль»</param>
+    /// <param name="e">Параметры события клика</param>
     private void ButtonSavePassword_Click(object sender, RoutedEventArgs e)
     {
-        // 11.3. Проверка заполнения ВСЕХ полей
         if (string.IsNullOrEmpty(CurrentPasswordBox.Password) ||
             string.IsNullOrEmpty(NewPasswordBox.Password) ||
             string.IsNullOrEmpty(ConfirmPasswordBox.Password) ||
@@ -41,7 +54,6 @@ public partial class ChangePassPage : Page
         {
             using var db = new PollsDbContext();
 
-            // 11.4. Проверка правильности введенных данных (логин + текущий пароль)
             string hashedCurrentPass = SecurityHelper.GetHash(CurrentPasswordBox.Password);
             var user = db.UserAccounts
                 .FirstOrDefault(u => u.Login == TbLogin.Text.Trim() && u.PasswordHash == hashedCurrentPass);
@@ -52,7 +64,6 @@ public partial class ChangePassPage : Page
                 return;
             }
 
-            // 11.5. Проверка формата нового пароля (как в шаге 6: >=6 символов, английская раскладка, цифра)
             string newPwd = NewPasswordBox.Password;
             if (newPwd.Length < 6)
             {
@@ -86,14 +97,12 @@ public partial class ChangePassPage : Page
                 return;
             }
 
-            // Проверка совпадения подтверждения пароля
             if (NewPasswordBox.Password != ConfirmPasswordBox.Password)
             {
                 MessageBox.Show("Новый пароль и подтверждение не совпадают!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            // 11.6. Сохранение нового хеша пароля
             user.PasswordHash = SecurityHelper.GetHash(NewPasswordBox.Password);
             db.SaveChanges();
 

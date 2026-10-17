@@ -8,10 +8,16 @@ using UP01_Korzh_Polls.Models;
 
 namespace UP01_Korzh_Polls.Pages;
 
+/// <summary>
+/// Страница пользователя: каталог участников, участие в доступных опросах и фильтрация
+/// </summary>
 public partial class UserPage : Page
 {
     private UserAccount? _loggedInUser;
 
+    /// <summary>
+    /// Конструктор по умолчанию страницы пользователя: загрузка каталога пользователей и опросов
+    /// </summary>
     public UserPage()
     {
         InitializeComponent();
@@ -19,11 +25,18 @@ public partial class UserPage : Page
         LoadPolls();
     }
 
+    /// <summary>
+    /// Конструктор с передачей данных текущего авторизованного пользователя
+    /// </summary>
+    /// <param name="user">Текущий пользователь системы</param>
     public UserPage(UserAccount user) : this()
     {
         _loggedInUser = user;
     }
 
+    /// <summary>
+    /// Загрузка перечня активных опросов из базы данных для голосования
+    /// </summary>
     private void LoadPolls()
     {
         try
@@ -42,6 +55,11 @@ public partial class UserPage : Page
         }
     }
 
+    /// <summary>
+    /// Голосование в выбранном опросе: проверка уникальности ответа и фиксация в таблице responses
+    /// </summary>
+    /// <param name="sender">Кнопка «Проголосовать»</param>
+    /// <param name="e">Параметры события клика</param>
     private void btnVotePoll_Click(object sender, RoutedEventArgs e)
     {
         if (DataGridPollsForUser.SelectedItem is not Poll selectedPoll)
@@ -54,8 +72,7 @@ public partial class UserPage : Page
         {
             using var db = new PollsDbContext();
 
-            // Проверяем, голосовал ли уже пользователь
-            int userId = _loggedInUser?.Id ?? 2; // текущий пользователь или дефолтный пользователь
+            int userId = _loggedInUser?.Id ?? 2;
             bool alreadyVoted = db.Responses.Any(r => r.PollId == selectedPoll.Id && r.UserId == userId);
 
             if (alreadyVoted)
@@ -64,7 +81,6 @@ public partial class UserPage : Page
                 return;
             }
 
-            // Фиксируем участие пользователя в опросе
             var response = new Response
             {
                 PollId = selectedPoll.Id,
@@ -83,7 +99,11 @@ public partial class UserPage : Page
         }
     }
 
-    // Шаг 8. Пункт 7: Очистка фильтров
+    /// <summary>
+    /// Сброс всех примененных фильтров пользователей к начальным значениям
+    /// </summary>
+    /// <param name="sender">Кнопка «Очистить фильтры»</param>
+    /// <param name="e">Параметры события клика</param>
     private void clearFiltersButton_Click_1(object sender, RoutedEventArgs e)
     {
         fioFilterTextBox.Text = "";
@@ -92,34 +112,59 @@ public partial class UserPage : Page
         UpdateUsers();
     }
 
-    // Шаг 11: Смена пароля для пользователя
+    /// <summary>
+    /// Переход на экран смены пароля текущего пользователя
+    /// </summary>
+    /// <param name="sender">Кнопка «Сменить пароль»</param>
+    /// <param name="e">Параметры события клика</param>
     private void btnChangePassword_Click(object sender, RoutedEventArgs e)
     {
         NavigationService?.Navigate(new ChangePassPage(_loggedInUser?.Login));
     }
 
-    // Шаг 8. Пункт 8: Обработчики изменений параметров фильтрации
+    /// <summary>
+    /// Обработка изменения текста в поле фильтрации по ФИО
+    /// </summary>
+    /// <param name="sender">Текстовое поле ввода ФИО</param>
+    /// <param name="e">Параметры события изменения текста</param>
     private void fioFilterTextBox_TextChanged(object sender, TextChangedEventArgs e)
     {
         UpdateUsers();
     }
 
+    /// <summary>
+    /// Обработка смены направления сортировки по ФИО
+    /// </summary>
+    /// <param name="sender">Выпадающий список сортировки</param>
+    /// <param name="e">Параметры события изменения выбора</param>
     private void sortComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         UpdateUsers();
     }
 
+    /// <summary>
+    /// Обработка активации фильтрации «Только администраторы»
+    /// </summary>
+    /// <param name="sender">Флажок «Только администраторы»</param>
+    /// <param name="e">Параметры события</param>
     private void onlyAdminCheckBox_Checked(object sender, RoutedEventArgs e)
     {
         UpdateUsers();
     }
 
+    /// <summary>
+    /// Обработка деактивации фильтрации «Только администраторы»
+    /// </summary>
+    /// <param name="sender">Флажок «Только администраторы»</param>
+    /// <param name="e">Параметры события</param>
     private void onlyAdminCheckBox_Unchecked(object sender, RoutedEventArgs e)
     {
         UpdateUsers();
     }
 
-    // Шаг 8. Пункт 8: Логика фильтрации и сортировки
+    /// <summary>
+    /// Применение всех фильтров (по ФИО, роли) и сортировки к списку пользователей
+    /// </summary>
     private void UpdateUsers()
     {
         if (!IsInitialized) return;
@@ -129,7 +174,6 @@ public partial class UserPage : Page
             using var db = new PollsDbContext();
             List<UserAccount> currentUsers = db.UserAccounts.AsNoTracking().ToList();
 
-            // Фильтрация по ФИО
             if (!string.IsNullOrWhiteSpace(fioFilterTextBox.Text))
             {
                 currentUsers = currentUsers
@@ -137,7 +181,6 @@ public partial class UserPage : Page
                     .ToList();
             }
 
-            // Фильтрация по роли (только администраторы)
             if (onlyAdminCheckBox.IsChecked == true)
             {
                 currentUsers = currentUsers
@@ -145,7 +188,6 @@ public partial class UserPage : Page
                     .ToList();
             }
 
-            // Сортировка по возрастанию / убыванию ФИО
             if (sortComboBox.SelectedIndex == 0)
             {
                 currentUsers = currentUsers.OrderBy(x => x.FullName).ToList();

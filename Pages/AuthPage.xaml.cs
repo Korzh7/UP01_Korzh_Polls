@@ -9,29 +9,47 @@ using UP01_Korzh_Polls.Models;
 
 namespace UP01_Korzh_Polls.Pages;
 
+/// <summary>
+/// Страница авторизации пользователей: ввод учетных данных, валидация капчи и распределение по ролям
+/// </summary>
 public partial class AuthPage : Page
 {
-    // Шаг 4. Пункт 5 & Шаг 5. Пункт 1: Переменные попыток и пользователя
     private int failedAttempts = 0;
     private UserAccount? currentUser;
 
+    /// <summary>
+    /// Конструктор страницы авторизации
+    /// </summary>
     public AuthPage()
     {
         InitializeComponent();
     }
 
-    // Подсказки-плейсхолдеры
+    /// <summary>
+    /// Обработчик изменения текста логина для динамического отображения подсказки-плейсхолдера
+    /// </summary>
+    /// <param name="sender">Поле ввода логина</param>
+    /// <param name="e">Параметры изменения текста</param>
     private void TextBoxLogin_TextChanged(object sender, TextChangedEventArgs e)
     {
         txtHintLogin.Visibility = string.IsNullOrEmpty(TextBoxLogin.Text) ? Visibility.Visible : Visibility.Hidden;
     }
 
+    /// <summary>
+    /// Обработчик изменения пароля для динамического отображения подсказки-плейсхолдера
+    /// </summary>
+    /// <param name="sender">Поле ввода пароля</param>
+    /// <param name="e">Параметры изменения пароля</param>
     private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
     {
         txtHintPass.Visibility = string.IsNullOrEmpty(PasswordBox.Password) ? Visibility.Visible : Visibility.Hidden;
     }
 
-    // Шаг 4. Пункт 6: Авторизация пользователя
+    /// <summary>
+    /// Авторизация пользователя: сверка хеша пароля в базе данных и переход в зависимости от роли (Admin/User)
+    /// </summary>
+    /// <param name="sender">Кнопка «Войти»</param>
+    /// <param name="e">Параметры клика</param>
     private void ButtonEnter_OnClick(object sender, RoutedEventArgs e)
     {
         if (string.IsNullOrEmpty(TextBoxLogin.Text) || string.IsNullOrEmpty(PasswordBox.Password))
@@ -57,7 +75,6 @@ public partial class AuthPage : Page
                 MessageBox.Show("Пользователь с такими данными не найден!", "Ошибка входа", MessageBoxButton.OK, MessageBoxImage.Error);
                 failedAttempts++;
 
-                // Шаг 5: 3 неверных ввода — вывод капчи
                 if (failedAttempts >= 3)
                 {
                     CaptchaSwitch(true);
@@ -71,7 +88,6 @@ public partial class AuthPage : Page
                 MessageBox.Show($"Добро пожаловать, {user.FullName}!", "Успешная авторизация", MessageBoxButton.OK, MessageBoxImage.Information);
                 failedAttempts = 0;
 
-                // Переход в зависимости от роли (Пользователь / Администратор)
                 switch (user.Role)
                 {
                     case "Admin":
@@ -90,7 +106,10 @@ public partial class AuthPage : Page
         }
     }
 
-    // Шаг 5. Метод включения / отключения капчи
+    /// <summary>
+    /// Переключение видимости панели капчи и доступности кнопки входа
+    /// </summary>
+    /// <param name="showCaptcha">Флаг отображения капчи</param>
     public void CaptchaSwitch(bool showCaptcha)
     {
         if (showCaptcha)
@@ -106,7 +125,9 @@ public partial class AuthPage : Page
         }
     }
 
-    // Шаг 5. Код генерации капчи
+    /// <summary>
+    /// Генерация случайной строки символов капчи из 6 элементов
+    /// </summary>
     public void CaptchaChange()
     {
         string allowchar = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,y,z,1,2,3,4,5,6,7,8,9,0";
@@ -122,12 +143,21 @@ public partial class AuthPage : Page
         captcha.Text = pwd;
     }
 
+    /// <summary>
+    /// Обновление защитного кода капчи по кнопке
+    /// </summary>
+    /// <param name="sender">Кнопка «Обновить»</param>
+    /// <param name="e">Параметры события</param>
     private void ButtonRefreshCaptcha_Click(object sender, RoutedEventArgs e)
     {
         CaptchaChange();
     }
 
-    // Шаг 5. Подтверждение капчи
+    /// <summary>
+    /// Проверка совпадения введенного защитного кода с сгенерированной капчей
+    /// </summary>
+    /// <param name="sender">Кнопка подтверждения капчи</param>
+    /// <param name="e">Параметры события</param>
     private void submitCaptcha_Click(object sender, RoutedEventArgs e)
     {
         if (string.Equals(captchaInput.Text.Trim(), captcha.Text.Trim(), StringComparison.OrdinalIgnoreCase))
@@ -144,7 +174,11 @@ public partial class AuthPage : Page
         }
     }
 
-    // Шаг 5. Запрет копирования / вырезания / вставки капчи
+    /// <summary>
+    /// Блокировка системных операций буфера обмена (Copy, Cut, Paste) в поле капчи
+    /// </summary>
+    /// <param name="sender">Текстовое поле капчи</param>
+    /// <param name="e">Параметры перехваченной команды</param>
     private void textBox_PreviewExecuted(object sender, ExecutedRoutedEventArgs e)
     {
         if (e.Command == ApplicationCommands.Copy ||
@@ -155,12 +189,21 @@ public partial class AuthPage : Page
         }
     }
 
-    // Шаг 4. Пункт 7: Переходы на страницы регистрации и смены пароля
+    /// <summary>
+    /// Переход на экран регистрации новой учетной записи
+    /// </summary>
+    /// <param name="sender">Кнопка «Регистрация»</param>
+    /// <param name="e">Параметры события</param>
     private void ButtonReg_Click(object sender, RoutedEventArgs e)
     {
         NavigationService?.Navigate(new RegPage());
     }
 
+    /// <summary>
+    /// Переход на экран смены пароля пользователя
+    /// </summary>
+    /// <param name="sender">Кнопка смены пароля</param>
+    /// <param name="e">Параметры события</param>
     private void ButtonChangePassword_Click(object sender, RoutedEventArgs e)
     {
         NavigationService?.Navigate(new ChangePassPage());

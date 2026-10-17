@@ -3,8 +3,9 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:UP01_Korzh_Polls.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="600" d:DesignWidth="850"
+      d:DesignHeight="600" d:DesignWidth="900"
       Title="Данные пользователя">
 
 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
@@ -90,7 +91,7 @@
                     <TextBox x:Name="TBPhoto" Text="{Binding Photo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Column="1" ToolTip="Относительный или абсолютный путь к фото"/>
                 </Grid>
 
-                                <Grid>
+                <Grid>
                     <Button x:Name="ButtonClean" 
                             Content="Очистить" 
                             ToolTip="Очистить форму ввода" 

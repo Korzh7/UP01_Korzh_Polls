@@ -3,8 +3,9 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:UP01_Korzh_Polls.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="550" d:DesignWidth="850"
+      d:DesignHeight="600" d:DesignWidth="900"
       Title="Смена пароля">
 
     <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -28,27 +29,27 @@
                            Margin="0,0,0,20"
                            Foreground="{DynamicResource MutedTextColor}"/>
 
-                                <Label Content="Логин:" Margin="0,0,0,2"/>
+                <Label Content="Логин:" Margin="0,0,0,2"/>
                 <TextBox x:Name="TbLogin" 
                          ToolTip="Введите ваш логин" 
                          Margin="0,0,0,12"/>
 
-                                <Label Content="Текущий (старый) пароль:" Margin="0,0,0,2"/>
+                <Label Content="Текущий (старый) пароль:" Margin="0,0,0,2"/>
                 <PasswordBox x:Name="CurrentPasswordBox" 
                              ToolTip="Введите ваш текущий пароль" 
                              Margin="0,0,0,12"/>
 
-                                <Label Content="Новый пароль:" Margin="0,0,0,2"/>
+                <Label Content="Новый пароль:" Margin="0,0,0,2"/>
                 <PasswordBox x:Name="NewPasswordBox" 
                              ToolTip="Новый пароль: мин. 6 символов, латиница, хотя бы одна цифра" 
                              Margin="0,0,0,12"/>
 
-                                <Label Content="Подтвердите новый пароль:" Margin="0,0,0,2"/>
+                <Label Content="Подтвердите новый пароль:" Margin="0,0,0,2"/>
                 <PasswordBox x:Name="ConfirmPasswordBox" 
                              ToolTip="Повторите ввод нового пароля" 
                              Margin="0,0,0,20"/>
 
-                                <Button x:Name="ButtonSavePassword"
+                <Button x:Name="ButtonSavePassword"
                         Content="Сохранить новый пароль"
                         ToolTip="Применить изменения пароля"
                         HorizontalAlignment="Stretch"

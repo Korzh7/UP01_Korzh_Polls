@@ -3,8 +3,9 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:UP01_Korzh_Polls.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="600" d:DesignWidth="850"
+      d:DesignHeight="600" d:DesignWidth="900"
       Title="Регистрация пользователя">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
@@ -29,7 +30,7 @@
                            Margin="0,0,0,20"
                            Foreground="{DynamicResource MutedTextColor}"/>
 
-                                <Label Content="Логин:" Margin="0,0,0,2"/>
+                <Label Content="Логин:" Margin="0,0,0,2"/>
                 <Grid Margin="0,0,0,10">
                     <TextBox x:Name="txtbxLog"
                              ToolTip="Введите уникальный логин пользователя"
@@ -42,7 +43,7 @@
                                Margin="10,0,0,0"/>
                 </Grid>
 
-                                <Label Content="ФИО:" Margin="0,0,0,2"/>
+                <Label Content="ФИО:" Margin="0,0,0,2"/>
                 <Grid Margin="0,0,0,10">
                     <TextBox x:Name="txtbxFIO"
                              ToolTip="Введите Фамилию, Имя и Отчество полностью"
@@ -55,17 +56,17 @@
                                Margin="10,0,0,0"/>
                 </Grid>
 
-                                <Label Content="Email (электронная почта):" Margin="0,0,0,2"/>
+                <Label Content="Email (электронная почта):" Margin="0,0,0,2"/>
                 <TextBox x:Name="txtbxEmail"
                          ToolTip="Введите адрес электронной почты"
                          Margin="0,0,0,10"/>
 
-                                <Label Content="Телефон:" Margin="0,0,0,2"/>
+                <Label Content="Телефон:" Margin="0,0,0,2"/>
                 <TextBox x:Name="txtbxPhone"
                          ToolTip="Введите контактный телефон (например, +7 (999) 000-00-00)"
                          Margin="0,0,0,10"/>
 
-                                <Label Content="Пароль:" Margin="0,0,0,2"/>
+                <Label Content="Пароль:" Margin="0,0,0,2"/>
                 <Grid Margin="0,0,0,10">
                     <PasswordBox x:Name="passBxFrst"
                                  ToolTip="Пароль: мин. 6 символов, только латиница, хотя бы одна цифра"
@@ -78,7 +79,7 @@
                                Margin="10,0,0,0"/>
                 </Grid>
 
-                                <Label Content="Подтвердите пароль:" Margin="0,0,0,2"/>
+                <Label Content="Подтвердите пароль:" Margin="0,0,0,2"/>
                 <Grid Margin="0,0,0,10">
                     <PasswordBox x:Name="passBxScnd"
                                  ToolTip="Повторите введенный выше пароль"
@@ -91,7 +92,7 @@
                                Margin="10,0,0,0"/>
                 </Grid>
 
-                                <Label Content="Выберите роль:" Margin="0,0,0,2"/>
+                <Label Content="Выберите роль:" Margin="0,0,0,2"/>
                 <ComboBox x:Name="comboBxRole" 
                           ToolTip="Выберите роль пользователя в системе"
                           Margin="0,0,0,20">
@@ -99,7 +100,7 @@
                     <ComboBoxItem Content="Admin"/>
                 </ComboBox>
 
-                                <Button x:Name="regButton"
+                <Button x:Name="regButton"
                         Content="Зарегистрироваться"
                         ToolTip="Нажмите для создания учетной записи"
                         HorizontalAlignment="Stretch"

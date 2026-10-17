@@ -3,11 +3,12 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:UP01_Korzh_Polls.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="650" d:DesignWidth="850"
+      d:DesignHeight="600" d:DesignWidth="900"
       Title="Данные опроса">
 
-        <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+    <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
         <Border Background="{DynamicResource SurfaceColor}" 
                 BorderBrush="{DynamicResource BorderBrushColor}" 
                 BorderThickness="1" 
@@ -23,13 +24,13 @@
                            Margin="0,0,0,20"
                            Foreground="{DynamicResource PrimaryDarkColor}"/>
 
-                                <Label Content="Название опроса:*" Margin="0,0,0,2"/>
+                <Label Content="Название опроса:*" Margin="0,0,0,2"/>
                 <TextBox x:Name="TBPollTitle" 
                          Text="{Binding Title, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                          ToolTip="Введите заголовок опроса или голосования" 
                          Margin="0,0,0,10"/>
 
-                                <Label Content="Описание (необязательно):" Margin="0,0,0,2"/>
+                <Label Content="Описание (необязательно):" Margin="0,0,0,2"/>
                 <TextBox x:Name="TBPollDesc" 
                          Text="{Binding Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                          ToolTip="Введите пояснение или контекст опроса" 
@@ -38,7 +39,7 @@
                          AcceptsReturn="True"
                          Margin="0,0,0,10"/>
 
-                                <Label Content="Создатель (Пользователь):*" Margin="0,0,0,2"/>
+                <Label Content="Создатель (Пользователь):*" Margin="0,0,0,2"/>
                 <ComboBox x:Name="CBUser" 
                           SelectedValuePath="Id" 
                           SelectedValue="{Binding Path=UserId, Mode=TwoWay}" 
@@ -46,7 +47,7 @@
                           ToolTip="Выберите создателя опроса"
                           Margin="0,0,0,10"/>
 
-                                <Label Content="Тематическая категория:*" Margin="0,0,0,2"/>
+                <Label Content="Тематическая категория:*" Margin="0,0,0,2"/>
                 <ComboBox x:Name="CBCategory" 
                           SelectedValuePath="Id" 
                           SelectedValue="{Binding Path=CategoryId, Mode=TwoWay}" 
@@ -54,7 +55,7 @@
                           ToolTip="Выберите тематическую категорию"
                           Margin="0,0,0,10"/>
 
-                                <Grid Margin="0,0,0,20">
+                <Grid Margin="0,0,0,20">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
@@ -77,7 +78,7 @@
                     </StackPanel>
                 </Grid>
 
-                                <Grid>
+                <Grid>
                     <Button x:Name="ButtonClean" 
                             Content="Очистить" 
                             ToolTip="Очистить поля формы" 

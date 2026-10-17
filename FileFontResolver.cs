@@ -4,10 +4,21 @@ using PdfSharpCore.Fonts;
 
 namespace UP01_Korzh_Polls;
 
+/// <summary>
+/// Резолвер системных шрифтов для корректной генерации PDF-документов с поддержкой русского языка
+/// </summary>
 public class FileFontResolver : IFontResolver
 {
+    /// <summary>
+    /// Имя базового шрифта системы по умолчанию
+    /// </summary>
     public string DefaultFontName => "Arial";
 
+    /// <summary>
+    /// Загрузка байтов файла шрифта из системной директории шрифтов Windows
+    /// </summary>
+    /// <param name="faceName">Имя файла шрифта</param>
+    /// <returns>Массив байтов файла шрифта или null</returns>
     public byte[]? GetFont(string faceName)
     {
         string fontsFolder = Environment.GetFolderPath(Environment.SpecialFolder.Fonts);
@@ -24,6 +35,13 @@ public class FileFontResolver : IFontResolver
         return null;
     }
 
+    /// <summary>
+    /// Сопоставление гарнитуры шрифта и его начертания с файлом шрифта TrueType
+    /// </summary>
+    /// <param name="familyName">Семейство шрифта</param>
+    /// <param name="isBold">Флаг полужирного начертания</param>
+    /// <param name="isItalic">Флаг курсивного начертания</param>
+    /// <returns>Дескриптор шрифта FontResolverInfo</returns>
     public FontResolverInfo? ResolveTypeface(string familyName, bool isBold, bool isItalic)
     {
         if (familyName.Equals("Arial", StringComparison.OrdinalIgnoreCase) ||
