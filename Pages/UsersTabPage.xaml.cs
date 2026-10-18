@@ -8,8 +8,14 @@ using UP01_Korzh_Polls.Models;
 
 namespace UP01_Korzh_Polls.Pages;
 
+/// <summary>
+/// Страница управления учетными записями пользователей: табличный просмотр, добавление, редактирование и удаление
+/// </summary>
 public partial class UsersTabPage : Page
 {
+    /// <summary>
+    /// Конструктор страницы пользователей: загрузка данных и подписка на событие отображения
+    /// </summary>
     public UsersTabPage()
     {
         InitializeComponent();
@@ -17,6 +23,9 @@ public partial class UsersTabPage : Page
         this.IsVisibleChanged += Page_IsVisibleChanged;
     }
 
+    /// <summary>
+    /// Загрузка полного списка пользователей из базы данных в таблицу
+    /// </summary>
     private void LoadData()
     {
         try
@@ -30,7 +39,11 @@ public partial class UsersTabPage : Page
         }
     }
 
-    // Шаг 10. Пункт 4: Автообновление списка при возврате на страницу
+    /// <summary>
+    /// Автоматическое обновление данных таблицы при возврате пользователя на страницу
+    /// </summary>
+    /// <param name="sender">Текущая страница</param>
+    /// <param name="e">Параметры изменения свойства видимости</param>
     private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
     {
         if (Visibility == Visibility.Visible)
@@ -39,13 +52,21 @@ public partial class UsersTabPage : Page
         }
     }
 
-    // Шаг 10. Пункт 5: Кнопка перехода к добавлению пользователя
+    /// <summary>
+    /// Переход на форму добавления новой учетной записи пользователя
+    /// </summary>
+    /// <param name="sender">Кнопка «Добавить»</param>
+    /// <param name="e">Параметры клика</param>
     private void ButtonAdd_Click(object sender, RoutedEventArgs e)
     {
         NavigationService?.Navigate(new AddUserPage(null));
     }
 
-    // Шаг 10. Пункт 5: Каскадное удаление пользователей с подтверждением
+    /// <summary>
+    /// Каскадное удаление выделенных пользователей из базы данных с подтверждением действия
+    /// </summary>
+    /// <param name="sender">Кнопка «Удалить»</param>
+    /// <param name="e">Параметры клика</param>
     private void ButtonDel_Click(object sender, RoutedEventArgs e)
     {
         var usersForRemoving = DataGridUser.SelectedItems.Cast<UserAccount>().ToList();
@@ -78,7 +99,11 @@ public partial class UsersTabPage : Page
         }
     }
 
-    // Шаг 10. Пункт 5: Кнопка перехода к редактированию
+    /// <summary>
+    /// Переход на форму редактирования выбранного в строке таблицы пользователя
+    /// </summary>
+    /// <param name="sender">Кнопка редактирования строки</param>
+    /// <param name="e">Параметры клика</param>
     private void ButtonEdit_Click(object sender, RoutedEventArgs e)
     {
         if ((sender as Button)?.DataContext is UserAccount user)

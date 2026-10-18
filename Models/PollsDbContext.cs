@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,10 +6,17 @@ namespace UP01_Korzh_Polls.Models;
 
 public partial class PollsDbContext : DbContext
 {
+    /// <summary>
+    /// Инициализирует новый экземпляр контекста базы данных <see cref="PollsDbContext"/>.
+    /// </summary>
     public PollsDbContext()
     {
     }
 
+    /// <summary>
+    /// Инициализирует новый экземпляр контекста базы данных с заданными параметрами.
+    /// </summary>
+    /// <param name="options">Параметры конфигурации контекста базы данных.</param>
     public PollsDbContext(DbContextOptions<PollsDbContext> options)
         : base(options)
     {
@@ -29,10 +36,18 @@ public partial class PollsDbContext : DbContext
 
     public virtual DbSet<UserAccount> UserAccounts { get; set; }
 
+    /// <summary>
+    /// Конфигурирует параметры подключения к базе данных MS SQL Server.
+    /// </summary>
+    /// <param name="optionsBuilder">Построитель параметров конфигурации контекста.</param>
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Server=.;Database=DB_Korzh_Polls;Trusted_Connection=True;TrustServerCertificate=True;");
 
+    /// <summary>
+    /// Настраивает сопоставление сущностей и связей с таблицами базы данных.
+    /// </summary>
+    /// <param name="modelBuilder">Построитель модели данных EF Core.</param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Answer>(entity =>

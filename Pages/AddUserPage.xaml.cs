@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -7,12 +8,18 @@ using UP01_Korzh_Polls.Models;
 
 namespace UP01_Korzh_Polls.Pages;
 
+/// <summary>
+/// Форма добавления и редактирования данных учетной записи пользователя администратором
+/// </summary>
 public partial class AddUserPage : Page
 {
     private UserAccount _currentUser = new UserAccount();
     private bool _isEditMode = false;
 
-    // Шаг 10. Пункт 7: Конструктор для добавления или редактирования
+    /// <summary>
+    /// Конструктор формы: принимает объект пользователя для редактирования либо null для добавления нового
+    /// </summary>
+    /// <param name="selectedUser">Редактируемый пользователь или null</param>
     public AddUserPage(UserAccount? selectedUser)
     {
         InitializeComponent();
@@ -34,10 +41,13 @@ public partial class AddUserPage : Page
         DataContext = _currentUser;
     }
 
-    // Шаг 10. Пункт 7: Логика кнопки Сохранить
+    /// <summary>
+    /// Валидация введенных полей, хеширование пароля и сохранение пользователя в базе данных
+    /// </summary>
+    /// <param name="sender">Кнопка «Сохранить»</param>
+    /// <param name="e">Параметры события клика</param>
     private void ButtonSave_Click(object sender, RoutedEventArgs e)
     {
-        // Синхронизация данных с полями ввода
         _currentUser.Login = TBLogin.Text?.Trim() ?? string.Empty;
         _currentUser.FullName = TBFio.Text?.Trim() ?? string.Empty;
         _currentUser.Email = string.IsNullOrWhiteSpace(TBEmail.Text) ? null : TBEmail.Text.Trim();
@@ -73,13 +83,11 @@ public partial class AddUserPage : Page
 
             if (_currentUser.Id == 0)
             {
-                // Новый пользователь
                 _currentUser.PasswordHash = SecurityHelper.GetHash(TBPass.Text.Trim());
                 db.UserAccounts.Add(_currentUser);
             }
             else
             {
-                // Редактирование
                 var existing = db.UserAccounts.FirstOrDefault(u => u.Id == _currentUser.Id);
                 if (existing != null)
                 {
@@ -107,7 +115,11 @@ public partial class AddUserPage : Page
         }
     }
 
-    // Шаг 10. Пункт 7: Логика кнопки Очистить
+    /// <summary>
+    /// Очистка всех полей формы создания/редактирования пользователя
+    /// </summary>
+    /// <param name="sender">Кнопка «Очистить»</param>
+    /// <param name="e">Параметры события клика</param>
     private void ButtonClean_Click(object sender, RoutedEventArgs e)
     {
         TBLogin.Text = string.Empty;

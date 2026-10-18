@@ -9,11 +9,17 @@ using UP01_Korzh_Polls.Models;
 
 namespace UP01_Korzh_Polls.Pages;
 
+/// <summary>
+/// Форма создания нового опроса или редактирования параметров существующего опроса
+/// </summary>
 public partial class AddPollPage : Page
 {
     private Poll _currentPoll = new Poll();
 
-    // Шаг 10. Пункт 15: Конструктор для добавления или редактирования опроса
+    /// <summary>
+    /// Конструктор формы добавления/редактирования опроса: загрузка списков авторов и категорий
+    /// </summary>
+    /// <param name="selectedPoll">Выбранный опрос для редактирования или null для нового</param>
     public AddPollPage(Poll? selectedPoll)
     {
         InitializeComponent();
@@ -44,7 +50,11 @@ public partial class AddPollPage : Page
         DataContext = _currentPoll;
     }
 
-    // Шаг 10. Пункт 15: Сохранение опроса с валидацией
+    /// <summary>
+    /// Проверка заполнения полей опроса и сохранение изменений в базе данных
+    /// </summary>
+    /// <param name="sender">Кнопка «Сохранить»</param>
+    /// <param name="e">Параметры события клика</param>
     private void ButtonSave_Click(object sender, RoutedEventArgs e)
     {
         _currentPoll.Title = TBPollTitle.Text?.Trim() ?? string.Empty;
@@ -105,6 +115,11 @@ public partial class AddPollPage : Page
         }
     }
 
+    /// <summary>
+    /// Сброс значений всех полей формы создания опроса
+    /// </summary>
+    /// <param name="sender">Кнопка «Очистить»</param>
+    /// <param name="e">Параметры события клика</param>
     private void ButtonClean_Click(object sender, RoutedEventArgs e)
     {
         TBPollTitle.Text = string.Empty;

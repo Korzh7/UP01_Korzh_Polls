@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -7,11 +8,17 @@ using UP01_Korzh_Polls.Models;
 
 namespace UP01_Korzh_Polls.Pages;
 
+/// <summary>
+/// Форма создания новой или редактирования существующей категории опросов
+/// </summary>
 public partial class AddCategoryPage : Page
 {
     private Category _currentCategory = new Category();
 
-    // Шаг 10. Пункт 11: Конструктор для добавления или редактирования категории
+    /// <summary>
+    /// Конструктор формы: принимает объект категории для редактирования либо null для создания новой
+    /// </summary>
+    /// <param name="selectedCategory">Выбранная категория или null</param>
     public AddCategoryPage(Category? selectedCategory)
     {
         InitializeComponent();
@@ -25,7 +32,11 @@ public partial class AddCategoryPage : Page
         DataContext = _currentCategory;
     }
 
-    // Шаг 10. Пункт 11: Сохранение категории
+    /// <summary>
+    /// Валидация названия категории и сохранение записи в базу данных
+    /// </summary>
+    /// <param name="sender">Кнопка «Сохранить»</param>
+    /// <param name="e">Параметры события клика</param>
     private void ButtonSaveCategory_Click(object sender, RoutedEventArgs e)
     {
         _currentCategory.Name = TBCategoryName.Text?.Trim() ?? string.Empty;
@@ -68,6 +79,11 @@ public partial class AddCategoryPage : Page
         }
     }
 
+    /// <summary>
+    /// Очистка текстового поля названия категории
+    /// </summary>
+    /// <param name="sender">Кнопка «Очистить»</param>
+    /// <param name="e">Параметры события клика</param>
     private void ButtonClean_Click(object sender, RoutedEventArgs e)
     {
         TBCategoryName.Text = string.Empty;
