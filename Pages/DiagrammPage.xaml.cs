@@ -19,14 +19,23 @@ using UP01_Korzh_Polls.Models;
 
 namespace UP01_Korzh_Polls.Pages;
 
+/// <summary>
+/// Страница аналитики и диаграмм: визуализация опросов пользователей и экспорт в Word, Excel и PDF
+/// </summary>
 public partial class DiagrammPage : System.Windows.Controls.Page
 {
+    /// <summary>
+    /// Конструктор страницы аналитики и диаграмм
+    /// </summary>
     public DiagrammPage()
     {
         InitializeComponent();
         LoadInitialData();
     }
 
+    /// <summary>
+    /// Загрузка начального списка пользователей для селектора аналитики
+    /// </summary>
     private void LoadInitialData()
     {
         try
@@ -45,7 +54,11 @@ public partial class DiagrammPage : System.Windows.Controls.Page
         }
     }
 
-    // Шаг 12. Пункты 10-11: Построение диаграммы с учетом как созданных опросов, так и участия
+    /// <summary>
+    /// Построение графиков и диаграмм (столбчатых, линейных, круговых) для выбранного пользователя через LiveCharts
+    /// </summary>
+    /// <param name="sender">Выпадающий список пользователей</param>
+    /// <param name="e">Параметры события изменения выбора</param>
     private void UpdateChart(object sender, SelectionChangedEventArgs e)
     {
         if (!IsInitialized) return;
@@ -260,7 +273,11 @@ public partial class DiagrammPage : System.Windows.Controls.Page
         }
     }
 
-    // Шаг 13: Выгрузка данных в Microsoft Word (.docx) через DocumentFormat.OpenXml
+    /// <summary>
+    /// Выполняет выгрузку сводного аналитического отчета в документ Microsoft Word (.docx).
+    /// </summary>
+    /// <param name="sender">Источник события.</param>
+    /// <param name="e">Параметры события нажатия кнопки.</param>
     private void BtnExportWord_Click(object sender, RoutedEventArgs e)
     {
         try
@@ -386,6 +403,12 @@ public partial class DiagrammPage : System.Windows.Controls.Page
         }
     }
 
+    /// <summary>
+    /// Вспомогательный метод для создания и стилизации ячейки таблицы Word.
+    /// </summary>
+    /// <param name="text">Текст ячейки.</param>
+    /// <param name="isHeader">Флаг, определяющий, является ли ячейка заголовком таблицы.</param>
+    /// <returns>Сконфигурированный объект ячейки <see cref="TableCell"/>.</returns>
     private TableCell CreateCell(string text, bool isHeader)
     {
         TableCell cell = new TableCell();
@@ -403,7 +426,11 @@ public partial class DiagrammPage : System.Windows.Controls.Page
         return cell;
     }
 
-    // Шаг 14: Выгрузка данных в Microsoft Excel (.xlsx) с отображением как созданных опросов, так и участия
+    /// <summary>
+    /// Выполняет экспорт аналитических данных в электронную таблицу Microsoft Excel (.xlsx).
+    /// </summary>
+    /// <param name="sender">Источник события.</param>
+    /// <param name="e">Параметры события нажатия кнопки.</param>
     private void BtnExportExcel_Click(object sender, RoutedEventArgs e)
     {
         try
@@ -641,7 +668,11 @@ public partial class DiagrammPage : System.Windows.Controls.Page
         }
     }
 
-    // Экспорт аналитического отчета в PDF (.pdf) через PdfSharpCore
+    /// <summary>
+    /// Выполняет генерацию и экспорт сводного аналитического отчета в формате PDF (.pdf).
+    /// </summary>
+    /// <param name="sender">Источник события.</param>
+    /// <param name="e">Параметры события нажатия кнопки.</param>
     private void BtnExportPdf_Click(object sender, RoutedEventArgs e)
     {
         try

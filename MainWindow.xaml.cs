@@ -6,10 +6,13 @@ using System.Windows.Navigation;
 namespace UP01_Korzh_Polls;
 
 /// <summary>
-/// Interaction logic for MainWindow.xaml
+/// Главное окно системы: управление глобальной навигацией, темами оформления и системным таймером
 /// </summary>
 public partial class MainWindow : Window
 {
+    /// <summary>
+    /// Конструктор главного окна: инициализация компонентов интерфейса и загрузка иконки
+    /// </summary>
     public MainWindow()
     {
         InitializeComponent();
@@ -25,7 +28,11 @@ public partial class MainWindow : Window
         }
     }
 
-    // Шаг 2. Пункт 5: Инициализация таймера даты и времени
+    /// <summary>
+    /// Обработчик загрузки окна: старт системного таймера времени и переход на страницу входа
+    /// </summary>
+    /// <param name="sender">Источник события</param>
+    /// <param name="e">Параметры события загрузки</param>
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
         var timer = new System.Windows.Threading.DispatcherTimer();
@@ -34,11 +41,14 @@ public partial class MainWindow : Window
         timer.Tick += (o, t) => { DateTimeNow.Text = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss"); };
         timer.Start();
 
-        // Загрузка страницы авторизации (Шаг 4) при старте
         MainFrame.Navigate(new Pages.AuthPage());
     }
 
-    // Шаг 2. Пункт 6: Кнопка «Назад»
+    /// <summary>
+    /// Переход на один шаг назад по стеку навигации
+    /// </summary>
+    /// <param name="sender">Кнопка «Назад»</param>
+    /// <param name="e">Параметры клика</param>
     private void ButtonBack_Click(object sender, RoutedEventArgs e)
     {
         if (MainFrame.CanGoBack)
@@ -47,7 +57,11 @@ public partial class MainWindow : Window
         }
     }
 
-    // Динамический заголовок страницы и управление видимостью кнопки «Назад»
+    /// <summary>
+    /// Обработка события завершения перехода между страницами: обновление заголовка и видимости кнопки «Назад»
+    /// </summary>
+    /// <param name="sender">Контейнер навигации MainFrame</param>
+    /// <param name="e">Параметры события навигации</param>
     private void MainFrame_Navigated(object sender, NavigationEventArgs e)
     {
         ButtonBack.Visibility = MainFrame.CanGoBack ? Visibility.Visible : Visibility.Hidden;
@@ -58,7 +72,11 @@ public partial class MainWindow : Window
         }
     }
 
-    // Шаг 2. Пункт 8: Выход из приложения с подтверждением
+    /// <summary>
+    /// Перехват закрытия приложения с выводом диалога подтверждения пользователю
+    /// </summary>
+    /// <param name="sender">Главное окно</param>
+    /// <param name="e">Параметры отмены закрытия</param>
     private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
     {
         if (MessageBox.Show("Вы уверены, что хотите закрыть окно?", "Подтверждение выхода", 
@@ -72,7 +90,11 @@ public partial class MainWindow : Window
         }
     }
 
-    // Шаг 3. Пункт 5: Переключение двух словарей стилей (Dictionary.xaml и CustomTheme.xaml)
+    /// <summary>
+    /// Переключение темы оформления приложения между светлой корпоративной и тёмной
+    /// </summary>
+    /// <param name="sender">Выпадающий список тем</param>
+    /// <param name="e">Параметры выбора элемента</param>
     private void ThemeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (!IsInitialized) return;
